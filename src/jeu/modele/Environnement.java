@@ -3,6 +3,7 @@ package jeu.modele;
 import java.util.ArrayList;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -18,7 +19,8 @@ public class Environnement {
 	private ObservableList<Ennemi> listeEnnemi;
 	private ObservableList<Projectile> listeProjectile;
 	private Timeline gameloop;
-
+	private IntegerProperty nummeroMancheProperty;
+	private IntegerProperty nbEnnemiProperty;
 	ImageView imballe = new ImageView(new Image("jeu/modele/image/personnage/neutre.png"));
 	Ennemi ennemi;
 	public Environnement(Timeline gameloop) {
@@ -28,6 +30,8 @@ public class Environnement {
 		this.listeProjectile= FXCollections.observableArrayList();
 		this.joueur=new Joueur(this);
 		this.mape = new Map();
+		this.nummeroMancheProperty=new SimpleIntegerProperty(0);
+		this.nbEnnemiProperty=new SimpleIntegerProperty(0);
 		
 		bois=new Resource();
 		pierre = new Resource();
@@ -38,7 +42,14 @@ public class Environnement {
 		listeResource.add(pierre);
 		listeResource.add(metal);
 	
+		
 	}
+	
+
+	public final IntegerProperty getNbEnnemiProperty() {
+		return nbEnnemiProperty;
+	}
+
 	
 	
 	public void arreterLeJeu() {
@@ -46,20 +57,16 @@ public class Environnement {
 	}
 	
 	
+	public final IntegerProperty getNummeroMancheProperty() {
+		return nummeroMancheProperty;
+	}
+
+
+	public void ajtmanche() {
+		this.nummeroMancheProperty.setValue(nummeroMancheProperty.getValue()+1);
+	}
 	
-	//collision
-	public boolean collisionGauche() {
-		return Collision.collisionGauche(joueur,getTabMap());
-	}
-	public boolean collisionDroite() {
-		return Collision.collisionDroite(joueur,getTabMap());
-	}
-	public boolean collisionHaut() {
-		return Collision.collisionHaut(joueur,getTabMap());
-	}
-	public boolean graviter() {
-		return Collision.graviter(joueur,getTabMap());
-	}
+
 	
 	//map
 	public int[] getTabMap() {
@@ -132,6 +139,8 @@ public class Environnement {
 
 	public void ajouter(Ennemi e) {
 		this.listeEnnemi.add(e);
+		this.nbEnnemiProperty.setValue(this.nbEnnemiProperty.get()+1);;
+		
 	}
 
 	public void ajouterProjectile(Projectile e) {
@@ -139,6 +148,18 @@ public class Environnement {
 	}
 	
 	public void agit() {
+		//gestion des ennemi mort et l'attaque du joueur
+		
+		
+		
+				for(int i=listeEnnemi.size()-1; i>=0;i--){
+					
+					Ennemi a = listeEnnemi.get(i);
+					if(a.getX()==getJoueur().getX()) {
+						System.out.println("on vlesse");
+						getJoueur().blesser();
+					}
+				}
 		
 //		System.out.println(listeProjectile.toString());
 		
@@ -212,6 +233,10 @@ public class Environnement {
 		//gestion des déplacements des ennemi
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
+			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>joueur.getX() && ennemi.getX()<joueur.getX()+20)||(ennemi.getX()<joueur.getX() && ennemi.getX()>joueur.getX()-20))) {
+				System.out.println("on vlesse");
+				getJoueur().blesser();
+			}
 			if(getJoueur().getX() < this.ennemi.getX() ) {
 				ennemi.setGauche(true);
 				ennemi.setDroite(false);
@@ -241,18 +266,7 @@ public class Environnement {
 				ennemi.tomber();	
 				
 		}
-		//gestion des ennemi mort et l'attaque du joueur
-		for(int i=listeEnnemi.size()-1; i>=0;i--){
-			
-			Ennemi a = listeEnnemi.get(i);
-			if(a.getPv()==0){
-				listeEnnemi.remove(i);
-			}
-			if(a.getX()==getJoueur().getX()) {
-				getJoueur().blesser();
-			}
-		}
+		
 
 	}
-	
 }

@@ -37,7 +37,8 @@ public class Controller implements Initializable{
 	@FXML
 	private HBox inventaireObjet;
 	@FXML
-	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin;
+	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin,labelNumManches,labelNbennemiRestant;
+	
 	@FXML
 	private ImageView case1, case2, case3, case4, case5, case6;
 	@FXML
@@ -110,6 +111,11 @@ public class Controller implements Initializable{
 	private void initAnimation() {
 		gameLoop = new Timeline();
 		env=new Environnement(gameLoop);
+		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche numéro :"+nouv.intValue()));
+		if (env.getListeEnnemi().isEmpty()) {
+			env.ajtmanche();
+		}
+		env.getNbEnnemiProperty().addListener((obse,old,nouv)-> labelNbennemiRestant.setText("zombie restant:"+nouv.intValue()));
 		this.imagesCraft = new ArrayList<>();
 		imagesCraft.add(ImageCraftEpeeBois);
 		imagesCraft.add(ImageCraftEpeePierre);
@@ -133,8 +139,9 @@ public class Controller implements Initializable{
 		
 	
 		
+		
 		//this.ajouterEnnemi();
-		this.env.getListeEnnemi().addListener(new MonObservateurEnnemie(conteneur));
+		this.env.getListeEnnemi().addListener(new MonObservateurEnnemie(conteneur,env));
 		this.env.getListeProjectile().addListener(new MonObservateurDeProjectile(conteneur));
 		new VueJoueur(conteneur, env.getJoueur());
 		this.env.getJoueur().nbCoeurProperty().addListener(new ObeservateurPv(new VuePv(env.getJoueur(), root), env.getJoueur()));
@@ -162,8 +169,8 @@ public class Controller implements Initializable{
 			construction = new Construction(env);
 			
 			if(ev.getButton().equals(MouseButton.PRIMARY)&& (env.getJoueur().getObjetEquiper()==12 || env.getJoueur().getObjetEquiper()==0 || env.getJoueur().getObjetEquiper()==2 || env.getJoueur().getObjetEquiper()==1)) {
-				env.getJoueur().attquer();
-				
+				if (env.getNbEnnemiProperty().get()>0 )
+					env.getJoueur().attaquer();
 			}
 			//utiliser bandage
 			else if (ev.getButton().equals(MouseButton.PRIMARY) && env.getJoueur().getObjetEquiperProperty().getValue()==9) {

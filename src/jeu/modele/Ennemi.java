@@ -1,5 +1,7 @@
 package jeu.modele;
 
+import java.util.Random;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -11,8 +13,9 @@ public class Ennemi extends Personnage{
 	private int vitesse;
 	private boolean droite,gauche,saute;
 	private String id;
-	public Ennemi(int xx) {
-		this.xProperty = new SimpleIntegerProperty(xx);
+	public Ennemi() {
+		Random random = new Random();
+		this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
 		this.yProperty = new SimpleIntegerProperty(360);
 		this.directionProperty =new SimpleIntegerProperty(0);
 		this.vitesse = 4;
