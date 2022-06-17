@@ -52,6 +52,7 @@ public class VueJoueur {
 	}
 	
 	public void actualiserImage() {
+		
 		if(this.joueur.getDroite()) 
 			this.imgActive.setImage(images.get(1));
 		else if(this.joueur.getGauche()) 

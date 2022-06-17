@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import jeu.modele.inventaire.Inventaire;
+import jeu.modele.projectile.Projectile;
 
 
 public class Joueur extends Personnage{
@@ -23,7 +24,7 @@ public class Joueur extends Personnage{
 	private int matChoisi;
 	private int caseChoisi;
 	protected Environnement env;
-	private boolean direction; //true:droite     false:gauche
+	private BooleanProperty directionProperty; //true:droite     false:gauche
 	private int xtile;
 	private int ytile;	
 	
@@ -42,6 +43,8 @@ public class Joueur extends Personnage{
 		this.droiteProperty=new  SimpleBooleanProperty();
 		this.gaucheProperty=new  SimpleBooleanProperty();
 		this.sauteProperty=new  SimpleBooleanProperty();
+		
+		this.directionProperty=new SimpleBooleanProperty();
 		
 		this.nbSaut = 0;
 		this.matChoisi = 0;
@@ -62,6 +65,17 @@ public class Joueur extends Personnage{
 						m.perdrePv(5);
 				}
 		}
+	}
+	
+	public void tirer() {
+		int directionBalle;
+		if(directionProperty.getValue()) {
+			directionBalle=1;
+		}else {
+			directionBalle=2;
+		}
+		env.ajouterProjectile(new Projectile(env, getX(), getY(), 15, directionBalle));
+		
 	}
 
 	//CONSTRUCION
@@ -184,7 +198,7 @@ public class Joueur extends Personnage{
 		matChoisi = mat;
 	}
 	public void setDirection(boolean direction) {
-		this.direction = direction;
+		this.directionProperty.setValue(direction);
 	}
 
 	public void setCaseChoisi(int caseChoisi) {
@@ -234,7 +248,7 @@ public class Joueur extends Personnage{
 		return matChoisi;
 	}
 	public boolean getDirection() {
-		return direction;
+		return directionProperty.getValue();
 	}
 	
 	public Environnement getEnv() {
@@ -247,6 +261,9 @@ public class Joueur extends Personnage{
 
 	public int getObjetEquiper() {
 		return this.ObjetEquiperProperty.getValue();
+	}
+	public final BooleanProperty getDirectionProperty() {
+		return this.directionProperty;
 	}
 	
 

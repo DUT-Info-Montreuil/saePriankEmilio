@@ -3,6 +3,7 @@ package jeu.controller;
 import java.net.URL;
 
 import jeu.modele.*;
+import jeu.modele.projectile.Projectile;
 import jeu.vue.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -133,6 +135,7 @@ public class Controller implements Initializable{
 		
 		//this.ajouterEnnemi();
 		this.env.getListeEnnemi().addListener(new MonObservateurEnnemie(conteneur));
+		this.env.getListeProjectile().addListener(new MonObservateurDeProjectile(conteneur));
 		new VueJoueur(conteneur, env.getJoueur());
 		this.env.getJoueur().nbCoeurProperty().addListener(new ObeservateurPv(new VuePv(env.getJoueur(), root), env.getJoueur()));
 		this.env.getJoueur().getNbBouclierProperty().addListener(new ObservateurBouclier(new VueBouclier(env.getJoueur(), root), env.getJoueur()));
@@ -160,10 +163,14 @@ public class Controller implements Initializable{
 			
 			if(ev.getButton().equals(MouseButton.PRIMARY)&& (env.getJoueur().getObjetEquiper()==12 || env.getJoueur().getObjetEquiper()==0 || env.getJoueur().getObjetEquiper()==2 || env.getJoueur().getObjetEquiper()==1)) {
 				env.getJoueur().attquer();
+				
 			}
 			//utiliser bandage
 			else if (ev.getButton().equals(MouseButton.PRIMARY) && env.getJoueur().getObjetEquiperProperty().getValue()==9) {
 				env.getJoueur().utiliserBandage();
+			}
+			else if (ev.getButton().equals(MouseButton.PRIMARY) && env.getJoueur().getObjetEquiperProperty().getValue()==11) {
+				env.getJoueur().tirer();
 			}
 			//utiliser un kit De soin
 			else if (ev.getButton().equals(MouseButton.PRIMARY) && env.getJoueur().getObjetEquiperProperty().getValue()==10) {

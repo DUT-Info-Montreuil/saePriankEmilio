@@ -1,4 +1,5 @@
 package jeu.vue;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +17,7 @@ public class VueInventaire {
 			new Image("jeu/modele/image/utilitaires/piocheMetal.png"),new Image("jeu/modele/image/utilitaires/bandage.png"),
 			new Image("jeu/modele/image/utilitaires/kitDeSoin.png"),new Image("jeu/modele/image/utilitaires/pistolet.png"),
 			new Image("jeu/modele/image/utilitaires/vide.png"),new Image("jeu/modele/image/utilitaires/bois.png"),
-			new Image("jeu/modele/image/utilitaires/pierre.png"),new Image("jeu/modele/image/utilitaires/metal.png"),};	
+			new Image("jeu/modele/image/utilitaires/pierre.png"),new Image("jeu/modele/image/utilitaires/metal.png"),new Image("jeu/modele/image/utilitaires/pistoletInverser.png")};	
 	private Joueur joueur;
 	private Environnement env;
 	private Label labelBois,labelPierre,labelMetal,labelNbDeBandage,labelNbDeKitDeSoin;
@@ -46,6 +47,8 @@ public class VueInventaire {
 	}
 	
 	public void afficherInventaireObjet() {
+		
+		
 		env.getNbResourceProperty("bois").addListener((obse,old,nouv)-> this.labelBois.setText(nouv.toString()));
 		env.getNbResourceProperty("pierre").addListener((obse,old,nouv)-> this.labelPierre.setText(nouv.toString()));
 		env.getNbResourceProperty("metal").addListener((obse,old,nouv)-> this.labelMetal.setText(nouv.toString()));		
@@ -53,8 +56,8 @@ public class VueInventaire {
 		joueur.getNbBandageProperty().addListener((obse,old,nouv)-> this.labelNbDeBandage.setText(nouv.toString()));
 		joueur.getNbKitdeSoinProperty().addListener((obse,old,nouv)-> this.labelNbDeKitDeSoin.setText(nouv.toString()));
 		//listenner qui sert a changer l'objet équiper par le joueur
-				joueur.getObjetEquiperProperty().addListener((obse,old,nouv)-> equiperObjetDansLesMains(nouv.intValue()));		
-				
+		joueur.getObjetEquiperProperty().addListener((obse,old,nouv)-> equiperObjetDansLesMains(nouv.intValue()));		
+		joueur.getDirectionProperty().addListener((obse,old,nouv)-> retournerObjet(nouv));
 		
 		for (int i = 0; i < joueur.getInventaireObjet().getInventaire().size(); i++) {
 			
@@ -64,6 +67,8 @@ public class VueInventaire {
 	
 	
 	
+	
+
 	public void actualiser(Number nouv) {	
 			switch (nouv.intValue()) {
 			case 0:
@@ -102,14 +107,7 @@ public class VueInventaire {
 			case 11 : 
 				case4.setImage(tabImage[11]);
 				break;
-			default:
-				case1.setImage(tabImage[tabImage.length-1]);
-				case2.setImage(tabImage[tabImage.length-1]);
-				case3.setImage(tabImage[tabImage.length-1]);
-				case4.setImage(tabImage[tabImage.length-1]);
-				case5.setImage(tabImage[tabImage.length-1]);
-				case6.setImage(tabImage[tabImage.length-1]);
-				break;
+		
 			}
 			System.out.println(joueur.getInventaireObjet().getInventaire().toString());
 		}	
@@ -117,8 +115,29 @@ public class VueInventaire {
 	public void equiperObjetDansLesMains(int i) {
 		System.out.println("Objet équiper :"+i );
 		imgObjetDansLesMains.setImage(tabImage[i]);
+		
 	}
 	
-
+	private void retournerObjet(Boolean nouv) {
+		if(!nouv) {
+			imgObjetDansLesMains.translateXProperty().bind(joueur.xProperty().add(-20));
+			if (joueur.getObjetEquiper()==11) { 
+				imgObjetDansLesMains.setImage(tabImage[16]);
+				imgObjetDansLesMains.setRotate(0);
+			}
+			else
+				imgObjetDansLesMains.setRotate(240);
+			
+		}else {
+			imgObjetDansLesMains.translateXProperty().bind(joueur.xProperty().add(40));
+			if (joueur.getObjetEquiper()==11) {
+				imgObjetDansLesMains.setImage(tabImage[11]);
+				imgObjetDansLesMains.setRotate(0);
+			}
+			else
+				imgObjetDansLesMains.setRotate(350);
+		}
+		
+	}
 	
 }

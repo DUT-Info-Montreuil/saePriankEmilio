@@ -40,6 +40,11 @@ public class Collision {
 		return false;
 	}
 	
+	
+	
+	
+	
+	
 	public static boolean collisionHaut(Personnage personnage,int[] tabMap){
 		int xtile,xtile2,xtile3;
 		int ytile;
@@ -119,6 +124,36 @@ public class Collision {
 		ValeurTil2=tabMap[(xtile+(ytile2*20))];
 		ValeurTil3=tabMap[(xtile+(ytile3*20))];
 		if(!tuileSauter.contains(ValeurTile)  || !tuileSauter.contains(ValeurTil2)  || !tuileSauter.contains(ValeurTil3) ) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean collisionBalleDroite(int x,int y,int[] tabMap){
+		int xtile;
+		int ytile;
+		int ValeurTile;
+		
+		xtile=(x+40)/40;
+		ytile=(y+20)/40;
+	
+		ValeurTile=tabMap[(xtile+(ytile*20))];
+		if (ValeurTile!=0 && ValeurTile!=7 ) {
+			return true;
+		}
+		return false;
+	}
+	public static boolean collisionBalleGauche(int x,int y,int[] tabMap){
+		int xtile;
+		int ytile;
+		int ValeurTile;
+		
+		xtile=(x-1)/40;
+		ytile=y/40;
+		
+		ValeurTile=tabMap[(xtile+(ytile*20))];
+	
+		if(ValeurTile!=0 && ValeurTile!=7 ) {
 			return true;
 		}
 		return false;

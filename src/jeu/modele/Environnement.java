@@ -1,11 +1,13 @@
 package jeu.modele;
 
 import java.util.ArrayList;
-
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import jeu.modele.projectile.Projectile;
 import jeu.modele.resource.Resource;
 
 public class Environnement {
@@ -14,14 +16,16 @@ public class Environnement {
 	private Map mape;
 	private ArrayList<Resource> listeResource;
 	private ObservableList<Ennemi> listeEnnemi;
+	private ObservableList<Projectile> listeProjectile;
 	private Timeline gameloop;
-	
-	
-	
+
+	ImageView imballe = new ImageView(new Image("jeu/modele/image/personnage/neutre.png"));
 	Ennemi ennemi;
 	public Environnement(Timeline gameloop) {
 		this.gameloop=gameloop;
+		
 		this.listeEnnemi= FXCollections.observableArrayList();
+		this.listeProjectile= FXCollections.observableArrayList();
 		this.joueur=new Joueur(this);
 		this.mape = new Map();
 		
@@ -33,6 +37,7 @@ public class Environnement {
 		listeResource.add(bois);
 		listeResource.add(pierre);
 		listeResource.add(metal);
+	
 	}
 	
 	
@@ -65,13 +70,12 @@ public class Environnement {
 	// resoruce bois,pierre,metal
 	
 	public Resource getResource(String matiere) {
-		if (matiere.equals("bois")) {
+		if (matiere.equals("bois")) 
 			return this.bois;
-		}else if (matiere.equals("pierre")) {
+		else if (matiere.equals("pierre")) 
 			return this.pierre;
-		}else if (matiere.equals("metal")) {
+		else if (matiere.equals("metal")) 
 			return this.metal;
-		}
 		return null;
 	}
 	
@@ -79,13 +83,12 @@ public class Environnement {
 		return listeResource;
 	}
 	public final IntegerProperty getNbResourceProperty(String matiere){
-		if (matiere.equals("bois")) {
+		if (matiere.equals("bois")) 
 			return this.bois.getNbResourceProperty();
-		}else if (matiere.equals("pierre")) {
+		else if (matiere.equals("pierre")) 
 			return this.pierre.getNbResourceProperty();
-		}else if (matiere.equals("metal")) {
+		else if (matiere.equals("metal")) 
 			 return this.metal.getNbResourceProperty();
-		}
 		return null;
 	}
 
@@ -96,7 +99,6 @@ public class Environnement {
 			return pierre.getNbResourceProperty().intValue();
 		else if (matiere.equals("metal")) 
 			return metal.getNbResourceProperty().intValue();
-		
 		return 0;
 		
 	}
@@ -107,8 +109,6 @@ public class Environnement {
 			pierre.ajouterResource();
 		else if (matiere.equals("metal")) 
 			metal.ajouterResource();
-		
-		
 	}
 	
 	public void EnleverResource(String matiere,int i) {
@@ -126,13 +126,83 @@ public class Environnement {
 	public ObservableList<Ennemi> getListeEnnemi() {
 		return listeEnnemi;
 	}
-	
+	public ObservableList<Projectile> getListeProjectile() {
+		return listeProjectile;
+	}
 
 	public void ajouter(Ennemi e) {
 		this.listeEnnemi.add(e);
 	}
 
+	public void ajouterProjectile(Projectile e) {
+		this.listeProjectile.add(e);
+	}
+	
 	public void agit() {
+		
+//		System.out.println(listeProjectile.toString());
+		
+			for (int i = 0; i < listeProjectile.size(); i++) {
+				Projectile projectile = listeProjectile.get(i);
+				
+				switch (projectile.getDirection()) {
+				case 1:
+					if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+						projectile.toucher();
+						System.out.println("mur");
+					}
+					for(int j=listeEnnemi.size()-1; j>=0;j--){
+						Ennemi ennemi = listeEnnemi.get(j);
+						
+						if((projectile.getX()>ennemi.getX() || projectile.getX()==ennemi.getX())&&projectile.getY()==ennemi.getY()) {
+							ennemi.perdrePv(1);
+							projectile.toucher();
+						}
+						
+					}
+						
+					if (projectile.getFini()) {
+						System.out.println("finito");
+						listeProjectile.remove(projectile);
+					}
+					else if (projectile.getX()<projectile.getXarriver()) {
+						projectile.allerAdroite();
+					}else {
+						listeProjectile.remove(projectile);
+					}
+		
+					break;
+					
+				case 2:
+					if (Collision.collisionBalleGauche(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+						projectile.toucher();
+						System.out.println("mur");
+					}
+					for(int j=listeEnnemi.size()-1; j>=0;j--){
+						Ennemi a = listeEnnemi.get(j);
+						if((projectile.getX()<(a.getX()+40) || projectile.getX()==a.getX())&&projectile.getY()==a.getY()) {
+							a.perdrePv(1);
+							projectile.toucher();
+						}
+					}
+						
+					if (projectile.getFini()) {
+						System.out.println("finito");
+						listeProjectile.remove(projectile);
+					}
+					else if (projectile.getX()>projectile.getXarriver()) {
+						projectile.allerAGauche();
+					}else {
+						listeProjectile.remove(projectile);
+					}
+		
+					break;
+
+				default:
+					break;
+				}
+			}
+				
 		//graviter du joueur
 		if(!Collision.graviter(this.joueur,getTabMap())&& !this.joueur.getSaute() || this.joueur.getNbSaut()==6 || Collision.collisionHaut(this.joueur,getTabMap()) &&this.joueur.getSaute() ) 
 			this.joueur.tomber();
@@ -173,6 +243,7 @@ public class Environnement {
 		}
 		//gestion des ennemi mort et l'attaque du joueur
 		for(int i=listeEnnemi.size()-1; i>=0;i--){
+			
 			Ennemi a = listeEnnemi.get(i);
 			if(a.getPv()==0){
 				listeEnnemi.remove(i);
