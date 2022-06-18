@@ -41,7 +41,7 @@ public class VueInventaire {
 		afficherInventaireObjet();
 		this.imgObjetDansLesMains=imgObjetDansLesMains;
 		this.imgObjetDansLesMains.translateXProperty().bind(joueur.xProperty().add(40));
-		this.imgObjetDansLesMains.translateYProperty().bind(joueur.yProperty());
+		this.imgObjetDansLesMains.translateYProperty().bind(joueur.yProperty().add(5));
 		
 	}
 	
@@ -129,6 +129,7 @@ public class VueInventaire {
 			
 		}else {
 			imgObjetDansLesMains.translateXProperty().bind(joueur.xProperty().add(40));
+			imgObjetDansLesMains.translateYProperty().bind(joueur.yProperty().add(5));
 			if (joueur.getObjetEquiper()==11) {
 				imgObjetDansLesMains.setImage(tabImage[11]);
 				imgObjetDansLesMains.setRotate(0);

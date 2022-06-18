@@ -29,8 +29,8 @@ public class MonObservateurDeProjectile implements ListChangeListener<Projectile
 				
 					imgBalle.setId(nouveau.getId());
 					imgBalle.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
-					imgBalle.translateXProperty().bind(nouveau.getxProperty());
-					imgBalle.translateYProperty().bind(nouveau.getyProperty());
+					imgBalle.translateXProperty().bind(nouveau.getxProperty().add(50));
+					imgBalle.translateYProperty().bind(nouveau.getyProperty().add(6));
 					if(nouveau.getDirection()==2)
 						imgBalle.setRotate(180);
 					conteneur.getChildren().add(imgBalle);	
