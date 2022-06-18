@@ -2,7 +2,6 @@ package jeu.modele.projectile;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.layout.Pane;
 import jeu.modele.Environnement;
 
 public class Projectile {

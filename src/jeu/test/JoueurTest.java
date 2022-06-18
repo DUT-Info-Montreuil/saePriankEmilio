@@ -1,8 +1,12 @@
 package jeu.test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
 import org.junit.jupiter.api.Test;
-import jeu.modele.*;
+
+import jeu.modele.Ennemi;
+import jeu.modele.Environnement;
+import jeu.modele.Joueur;
 
 class JoueurTest {
 	Environnement env = new Environnement(null);

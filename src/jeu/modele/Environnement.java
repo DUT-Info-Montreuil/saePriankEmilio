@@ -1,6 +1,7 @@
 package jeu.modele;
 
 import java.util.ArrayList;
+
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

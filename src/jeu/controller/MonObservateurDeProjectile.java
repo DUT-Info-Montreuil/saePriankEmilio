@@ -1,7 +1,5 @@
 package jeu.controller;
 
-import java.util.ArrayList;
-
 import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

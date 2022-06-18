@@ -1,19 +1,14 @@
 package jeu.controller;
 //IMPORT
 import java.net.URL;
-
-import jeu.modele.*;
-import jeu.modele.projectile.Projectile;
-import jeu.vue.*;
-
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -21,6 +16,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import jeu.modele.Collision;
+import jeu.modele.Construction;
+import jeu.modele.Environnement;
+import jeu.modele.ObeservateurPv;
+import jeu.modele.ObservateurBouclier;
+import jeu.vue.VueBouclier;
+import jeu.vue.VueInventaire;
+import jeu.vue.VueJoueur;
+import jeu.vue.VueMap;
+import jeu.vue.VuePv;
 
 public class Controller implements Initializable{
 	//VARIABLES FXML
