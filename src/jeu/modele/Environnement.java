@@ -62,7 +62,7 @@ public class Environnement {
 				tempsPourmanche=30;
 				mancheLancer=true;
 			}
-		}, 100);
+		}, 5000);
 	}
 	
 	public void setFalsemancheLancer() {
@@ -178,8 +178,8 @@ public class Environnement {
 	
 	public void ajouter() {
 		this.listeEnnemi.add(new Ennemi(140));
-		
-
+		this.listeEnnemi.add(new Ennemi(100));
+		this.listeEnnemi.add(new Ennemi(190));
 		
 	}
 

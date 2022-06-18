@@ -181,9 +181,7 @@ public class Controller implements Initializable{
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
-	public void ennemi() {
-		env.ajouter();
-	}
+
 	//Placer/Casser les blocks de la map
 	public void block() {
 		root.setOnMouseClicked(ev -> {
