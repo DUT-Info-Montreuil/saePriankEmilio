@@ -13,7 +13,10 @@ public class Ennemi extends Personnage{
 	private int vitesse;
 	private boolean droite,gauche,saute;
 	private String id;
+	private boolean mort;
+	
 	public Ennemi(int i) {
+		this.mort=false;
 		Random random = new Random();
 		//this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
 		this.xProperty = new SimpleIntegerProperty(i);
@@ -25,6 +28,14 @@ public class Ennemi extends Personnage{
 		this.id="A"+compteur;
 	}
 	
+	public boolean isMort() {
+		return mort;
+	}
+
+	public void setMort(boolean mort) {
+		this.mort = mort;
+	}
+
 	//PVS
 	@Override
 	public void perdrePv(int i) {

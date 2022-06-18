@@ -57,14 +57,13 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				joueur.blesser();
 				break;
 			case Y :
-				joueur.gagnerPv();
 			
 				System.out.println(env.getListeEnnemi());
 				if (test==0) {
-					env.ajouter(new Ennemi(40));		
+					env.ajouter(new Ennemi(120));		
 					test++;
 				}else
-				env.ajouter(new Ennemi(40));			
+				env.ajouter(new Ennemi(120));			
 				    
 			
 			case U :

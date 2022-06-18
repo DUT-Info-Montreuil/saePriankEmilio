@@ -1,15 +1,17 @@
 package jeu.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-
 import org.junit.jupiter.api.Test;
 
+import javafx.animation.Timeline;
 import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.Joueur;
 
+
 class JoueurTest {
-	Environnement env = new Environnement(null);
+	Timeline gameloop = new Timeline();
+	Environnement env = new Environnement(gameloop);
 	Joueur j = new Joueur(env);
 	Ennemi e = new Ennemi(40);
 

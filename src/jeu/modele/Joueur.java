@@ -52,11 +52,10 @@ public class Joueur extends Personnage{
 	
 	
 	public void attaquer() {
-		
 		for(int i=0;i< env.getListeEnnemi().size();i++){
 			Ennemi m=env.getListeEnnemi().get(i);
-				if(m.getY()==getY() &&((m.getX()>getX() && m.getX()<getX()+40)||(m.getX()<getX() && m.getX()>getX()-40))){
-					System.out.println("jataqqquueee");
+				if(m.getY()==getY() &&((m.getX()>=getX() && m.getX()<=getX()+41)||(m.getX()<=getX() && m.getX()>=getX()-40))){
+					System.out.println("j'attaque");
 					if(getObjetEquiper()==12)
 						m.perdrePv(1);
 					else if(getObjetEquiper()==0)
@@ -443,14 +442,13 @@ public class Joueur extends Personnage{
 		public void crafterPiocheBois() {
 			if (env.getNbResource("bois")<3 && this.inventaireObjet.getObjetCase(3)!=6) 
 				System.out.println("pas assez de bois il vous en manque "+(3-env.getNbResource("bois")));
-			else if(this.inventaireObjet.getObjetCase(2)==6) 
+			else if(this.inventaireObjet.getObjetCase(3)==6) 
 				System.out.println("vous avez deja une pioche en bois");
 			else if(this.inventaireObjet.getObjetCase(3)==7 ||this.inventaireObjet.getObjetCase(3)==8)
 				System.out.println("Vous posseder une meilleur pioche");
 			else if(env.getNbResource("bois")>=3) {
 				this.inventaireObjet.SetObjetCase(3,6);
 				if (caseChoisi==3) {
-					
 					this.ObjetEquiperProperty.set(6);
 				}
 				env.EnleverResource("bois",3);

@@ -55,7 +55,9 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 	}
 	private void enleverSprite(Ennemi mort,int pv) {
 		if (mort.getPv()==0) {
+			mort.setMort(true);
 			env.getListeEnnemi().remove(mort);
+			
 			this.conteneur.getChildren().remove(this.conteneur.lookup("#"+mort.getId()));
 		}
 

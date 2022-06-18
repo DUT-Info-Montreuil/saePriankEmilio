@@ -1,14 +1,14 @@
 package jeu.modele;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import jeu.modele.projectile.Projectile;
 import jeu.modele.resource.Resource;
 
@@ -22,11 +22,13 @@ public class Environnement {
 	private Timeline gameloop;
 	private IntegerProperty nummeroMancheProperty;
 	private IntegerProperty nbEnnemiProperty;
-	ImageView imballe = new ImageView(new Image("jeu/modele/image/personnage/neutre.png"));
-	Ennemi ennemi;
+	private Ennemi ennemi;
+	private boolean toucher;
+	private Timer chrono;
+	private int nbTimer;
+	
 	public Environnement(Timeline gameloop) {
 		this.gameloop=gameloop;
-		
 		this.listeEnnemi= FXCollections.observableArrayList();
 		this.listeProjectile= FXCollections.observableArrayList();
 		this.joueur=new Joueur(this);
@@ -42,6 +44,8 @@ public class Environnement {
 		listeResource.add(bois);
 		listeResource.add(pierre);
 		listeResource.add(metal);
+		this.nbTimer = 0;
+		
 	
 		
 	}
@@ -51,7 +55,9 @@ public class Environnement {
 		return nbEnnemiProperty;
 	}
 
-	
+	public Ennemi getEnnemi() {
+		return listeEnnemi.get(getnbResource());
+	}
 	
 	public void arreterLeJeu() {
 		gameloop.stop();
@@ -157,8 +163,8 @@ public class Environnement {
 					
 					Ennemi a = listeEnnemi.get(i);
 					if(a.getX()==getJoueur().getX()) {
-						System.out.println("on vlesse");
-						getJoueur().blesser();
+						//System.out.println("on blesse");
+						//getJoueur().blesser();
 					}
 				}
 		
@@ -234,11 +240,42 @@ public class Environnement {
 		//gestion des d�placements des ennemi
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
-			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>joueur.getX() && ennemi.getX()<joueur.getX()+20)||(ennemi.getX()<joueur.getX() && ennemi.getX()>joueur.getX()-20))) {
+			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
 				System.out.println("on vlesse");
-				getJoueur().blesser();
+				nbTimer++;
+				if(nbTimer ==1) {
+				chrono = new Timer();
+				chrono.schedule(new TimerTask() {
+					int temp = 10;
+					@Override
+					public void run() {
+						
+						if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
+							temp--;
+							System.out.println(temp);
+						}
+						else {
+							toucher = false;
+							cancel();
+							nbTimer = 0;
+						}
+						if(ennemi.isMort()) {
+							toucher = false;
+							cancel();
+							nbTimer = 0;
+						}
+						if (temp==0 ) {
+							toucher = true;
+							cancel();
+							nbTimer = -1;
+						}
+					}
+				}, 0,100);
+				}
+				if(toucher && nbTimer==0 && !ennemi.isMort())
+					getJoueur().blesser();
 			}
-			if(getJoueur().getX() < this.ennemi.getX() ) {
+			if(getJoueur().getX()+40 < this.ennemi.getX() ) {
 				ennemi.setGauche(true);
 				ennemi.setDroite(false);
 				ennemi.setDirection(2);
@@ -246,7 +283,7 @@ public class Environnement {
 					this.ennemi.allerAGauche();
 			}
 			
-			else if(getJoueur().getX() > this.ennemi.getX()) {
+			else if(getJoueur().getX() > this.ennemi.getX()+40) {
 				ennemi.setDroite(true);
 				ennemi.setGauche(false);
 				ennemi.setDirection(1);
