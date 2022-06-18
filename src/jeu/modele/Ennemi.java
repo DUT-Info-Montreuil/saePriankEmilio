@@ -17,7 +17,7 @@ public class Ennemi extends Personnage{
 	
 	public Ennemi(int i) {
 		this.mort=false;
-		Random random = new Random();
+		
 		//this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
 		this.xProperty = new SimpleIntegerProperty(i);
 		this.yProperty = new SimpleIntegerProperty(360);

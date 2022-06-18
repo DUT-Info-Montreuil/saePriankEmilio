@@ -23,9 +23,10 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiDroite.png"));
 		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiGauche.png"));
 		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiSaut.png"));
+		env.getNbEnnemiProperty().addListener((arg0, arg1, nouv) ->changerManche(nouv));
 		}
 	public void onChanged(javafx.collections.ListChangeListener.Change<? extends Ennemi> c) {
-			System.out.println("ça change");
+			System.out.println("ï¿½a change");
 			
 			while(c.next()){
 				// on ajoute les nouveau ennemie
@@ -37,7 +38,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 						r.translateYProperty().bind(nouveau.getYProperty());
 						nouveau.getDirection().addListener((obse,old,nouv)-> changerImageDirection(r,nouv.intValue()));
 						conteneur.getChildren().add(r);	
-						
+						env.ajouterUnEnnemiAucompteur();
 						nouveau.getPvProperty().addListener(e-> enleverSprite(nouveau,nouveau.getPv()));
 					 	
 				}
@@ -57,11 +58,22 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		if (mort.getPv()==0) {
 			mort.setMort(true);
 			env.getListeEnnemi().remove(mort);
-			
+			env.enleverUnEnnemiAucompteur();
 			this.conteneur.getChildren().remove(this.conteneur.lookup("#"+mort.getId()));
 		}
 
 	}
 
+	private void changerManche(Number nouv) {
+		if (env.getNummeroMancheProperty().intValue()==20 && nouv.intValue()==0) {
+			System.out.println("c'est gagner");
+			env.arreterLeJeu();
+		}
+		else if (nouv.intValue()==0) {
+			env.ajtmanche();
+			env.lancerManche();
+		}
+
+	}
 		
 }

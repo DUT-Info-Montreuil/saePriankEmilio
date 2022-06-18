@@ -3,6 +3,8 @@ package jeu.controller;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import jeu.modele.Collision;
 import jeu.modele.Construction;
+import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.ObeservateurPv;
 import jeu.modele.ObservateurBouclier;
@@ -65,6 +68,7 @@ public class Controller implements Initializable{
 	private VueMap vueMap; //Vue de la Map
 	private ArrayList<ImageView> imagesCraft;
 	private Environnement env;
+
 	//INITIALISATION
 	@Override
 	
@@ -143,7 +147,7 @@ public class Controller implements Initializable{
 		vueMap = new VueMap(carte, env);
 		vueMap.afficherMap();
 		
-	
+		
 		
 		
 		//this.ajouterEnnemi();
@@ -155,11 +159,19 @@ public class Controller implements Initializable{
 		new VueInventaire(env, inventaireObjet,labelNbDeBandage,labelNbDeKitDeSoin, labelBois,labelPierre,labelMetal,case1,case2,case3,case4,case5,case6, imgObjetDansLesMains);
 		new gestionnaireDeCraft(env.getJoueur(),textCraft,imagesCraft);
 		this.gestionDesTouches();
+	
+		env.lancerManche();
+			
+			
 		
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.05), 
 				(ev ->{			
-				
+					if(env.getTempsPourmanche()==30 && env.isMancheLancer()==true) {
+						env.ajouter();
+						
+						env.setFalsemancheLancer();
+					}
 					
 
 					deplacementJoueur();
@@ -169,6 +181,9 @@ public class Controller implements Initializable{
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
+	public void ennemi() {
+		env.ajouter();
+	}
 	//Placer/Casser les blocks de la map
 	public void block() {
 		root.setOnMouseClicked(ev -> {

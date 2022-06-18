@@ -26,7 +26,8 @@ public class Environnement {
 	private boolean toucher;
 	private Timer chrono;
 	private int nbTimer;
-	
+	private int tempsPourmanche=0;
+	private boolean mancheLancer;
 	public Environnement(Timeline gameloop) {
 		this.gameloop=gameloop;
 		this.listeEnnemi= FXCollections.observableArrayList();
@@ -49,6 +50,33 @@ public class Environnement {
 	
 		
 	}
+	
+	
+	
+	public void lancerManche() {
+		Timer chronom=new Timer();
+		chronom.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				tempsPourmanche=30;
+				mancheLancer=true;
+			}
+		}, 30000);
+	}
+	
+	public void setFalsemancheLancer() {
+		this.mancheLancer=false;
+	}
+	
+	
+	public void enleverUnEnnemiAucompteur() {
+		this.nbEnnemiProperty.setValue(this.nbEnnemiProperty.getValue()-1);
+	}
+	public void ajouterUnEnnemiAucompteur() {
+		this.nbEnnemiProperty.setValue(this.nbEnnemiProperty.getValue()+1);
+	}
+	
 	
 
 	public final IntegerProperty getNbEnnemiProperty() {
@@ -146,7 +174,12 @@ public class Environnement {
 
 	public void ajouter(Ennemi e) {
 		this.listeEnnemi.add(e);
-		this.nbEnnemiProperty.setValue(this.nbEnnemiProperty.get()+1);;
+	}
+	
+	public void ajouter() {
+		this.listeEnnemi.add(new Ennemi(140));
+		
+
 		
 	}
 
@@ -313,5 +346,17 @@ public class Environnement {
 	}
 	public int getnbResource() {
 		return listeResource.get(joueur.getMatChoisi()).getNbResourceProperty().getValue();
+	}
+
+
+
+	public int getTempsPourmanche() {
+		return tempsPourmanche;
+	}
+
+
+
+	public boolean isMancheLancer() {
+		return mancheLancer;
 	}
 }
