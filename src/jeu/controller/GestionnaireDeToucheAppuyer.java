@@ -61,10 +61,10 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 			
 				System.out.println(env.getListeEnnemi());
 				if (test==0) {
-					env.ajouter(new Ennemi());		
+					env.ajouter(new Ennemi(40));		
 					test++;
 				}else
-				env.ajouter(new Ennemi());			
+				env.ajouter(new Ennemi(40));			
 				    
 			
 			case U :

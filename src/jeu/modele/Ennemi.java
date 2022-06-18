@@ -13,9 +13,10 @@ public class Ennemi extends Personnage{
 	private int vitesse;
 	private boolean droite,gauche,saute;
 	private String id;
-	public Ennemi() {
+	public Ennemi(int i) {
 		Random random = new Random();
-		this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
+		//this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
+		this.xProperty = new SimpleIntegerProperty(i);
 		this.yProperty = new SimpleIntegerProperty(360);
 		this.directionProperty =new SimpleIntegerProperty(0);
 		this.vitesse = 4;
@@ -130,5 +131,9 @@ public class Ennemi extends Personnage{
 		return directionProperty;
 	}
 
+	public void setPv(int pv) {
+		this.pvProperty.setValue(pv);
+	}
+	
 	
 }

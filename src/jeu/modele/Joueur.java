@@ -554,4 +554,14 @@ public class Joueur extends Personnage{
 		}
 
 
+		public int getNbKitdeSoin() {
+			return this.nbKitdeSoinProperty.get();
+		}
+
+
+		public int getNbBandage() {
+			return this.nbBandageProperty.get();
+		}
+
+		
 }
