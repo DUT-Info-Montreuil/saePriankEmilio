@@ -26,6 +26,8 @@ public class Environnement {
 	private boolean toucher;
 	private Timer chrono;
 	private int nbTimer;
+	private boolean mort; 
+	
 	
 	public Environnement(Timeline gameloop) {
 		this.gameloop=gameloop;
@@ -242,11 +244,14 @@ public class Environnement {
 			ennemi=listeEnnemi.get(i);
 			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
 				System.out.println("on vlesse");
+			
 				nbTimer++;
 				if(nbTimer ==1) {
 				chrono = new Timer();
+				mort = false;
 				chrono.schedule(new TimerTask() {
 					int temp = 10;
+					
 					@Override
 					public void run() {
 						
@@ -256,11 +261,13 @@ public class Environnement {
 						}
 						else {
 							toucher = false;
+
 							cancel();
 							nbTimer = 0;
 						}
 						if(ennemi.isMort()) {
 							toucher = false;
+							mort = true;
 							cancel();
 							nbTimer = 0;
 						}
@@ -272,7 +279,7 @@ public class Environnement {
 					}
 				}, 0,100);
 				}
-				if(toucher && nbTimer==0 && !ennemi.isMort())
+				if(toucher && nbTimer==0 && !mort )
 					getJoueur().blesser();
 			}
 			if(getJoueur().getX()+40 < this.ennemi.getX() ) {
