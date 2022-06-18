@@ -97,7 +97,8 @@ public class Environnement {
 			metal.EnleverResource(i);
 
 	}
-
+	
+	
 	public void ajouterEnnemi(Ennemi e) {
 		this.listeEnnemi.add(e);
 	}
@@ -109,6 +110,7 @@ public class Environnement {
 
 	}
 
+	
 	public void ajouterProjectile(Projectile e) {
 		this.listeProjectile.add(e);
 	}
@@ -181,7 +183,8 @@ public class Environnement {
 						int temp = 5;
 						@Override
 						public void run() {
-							if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
+							//if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
+							if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
 								temp--;
 								System.out.println(temp);
 							}
@@ -207,18 +210,18 @@ public class Environnement {
 				if(toucher && nbTimer==0 && !ennemiMort)
 					getJoueur().blesser();
 			}
-			if(getJoueur().getX()+40 < this.ennemi.getX() ) {
+			if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
 				ennemi.setGauche(true);
 				ennemi.setDroite(false);
 				ennemi.setDirection(2);
-				if (!Collision.collisionGauche(ennemi,getTabMap())) 
+				if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
 					this.ennemi.allerAGauche();
 			}
-			else if(getJoueur().getX() > this.ennemi.getX()+40) {
+			else if(getJoueur().getX() > this.ennemi.getX()+40  ) {
 				ennemi.setDroite(true);
 				ennemi.setGauche(false);
 				ennemi.setDirection(1);
-				if(!Collision.collisionDroite(ennemi,getTabMap()))
+				if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
 					this.ennemi.allerADroite();
 			}
 			else {

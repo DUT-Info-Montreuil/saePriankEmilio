@@ -15,7 +15,7 @@ public class Joueur extends Personnage{
 	private int nbSaut; //nb saut 
 	private int vitesse; //vitesse de deplacement du perso
 	private BooleanProperty droiteProperty,gaucheProperty,sauteProperty; //vraie si il se deplace ou saute
-	
+	private String id;
 	private Inventaire inventaireObjet =new Inventaire();
 
 	private IntegerProperty nbBandageProperty, nbKitdeSoinProperty; //nombre de bandage et de kit de soin
@@ -30,6 +30,7 @@ public class Joueur extends Personnage{
 	
 	//CONSTRUCTEUR//
 	public Joueur(Environnement env) {
+		this.id = "joueur";
 		this.env=env;
 		this.nbCoeursProperty=new SimpleIntegerProperty(5);
 		this.nbBouclierProperty = new SimpleIntegerProperty(0);
@@ -266,6 +267,9 @@ public class Joueur extends Personnage{
 	}
 	public final BooleanProperty getDirectionProperty() {
 		return this.directionProperty;
+	}
+	public String getId() {
+		return this.id;
 	}
 	
 

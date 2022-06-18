@@ -1,10 +1,13 @@
 package jeu.modele;
 
 import java.util.ArrayList;
+import java.util.Observable;
+
+import javafx.collections.ObservableList;
 
 public class Collision {
 
-	public static boolean collisionDroite(Personnage personnage,int[] tabMap){
+	public static boolean collisionDroite(Personnage personnage,int[] tabMap ){
 		int xtile;
 		int ytile,ytile2,ytile3;
 		int ValeurTile,ValeurTil2, ValeurTil3;
@@ -16,9 +19,8 @@ public class Collision {
 		ValeurTile=tabMap[(xtile+(ytile*20))];
 		ValeurTil2=tabMap[(xtile+(ytile2*20))];
 		ValeurTil3=tabMap[(xtile+(ytile3*20))];
-		if (ValeurTile!=0 && ValeurTile!=7 || ValeurTil2!=0 && ValeurTil2!=7  || ValeurTil3!=0 && ValeurTil3!=7  ) {
+		if (ValeurTile!=0 && ValeurTile!=7 || ValeurTil2!=0 && ValeurTil2!=7  || ValeurTil3!=0 && ValeurTil3!=7  ) 
 			return true;
-		}
 		return false;
 	}
 	
@@ -34,9 +36,8 @@ public class Collision {
 		ValeurTile=tabMap[(xtile+(ytile*20))];
 		ValeurTil2=tabMap[(xtile+(ytile2*20))];
 		ValeurTil3=tabMap[(xtile+(ytile3*20))];
-		if(ValeurTile!=0 && ValeurTile!=7 || ValeurTil2!=0 && ValeurTil2!=7  || ValeurTil3!=0 && ValeurTil3!=7  ) {
+		if(ValeurTile!=0 && ValeurTile!=7 || ValeurTil2!=0 && ValeurTil2!=7  || ValeurTil3!=0 && ValeurTil3!=7  ) 
 			return true;
-		}
 		return false;
 	}
 	
@@ -105,7 +106,8 @@ public class Collision {
 		return false;
 	}
 	
-	public static boolean collisionGaucheEnnemi(Personnage personnage,int[] tabMap){
+	public static boolean collisionGaucheEnnemi(Personnage personnage,int[] tabMap ){
+			
 		int xtile;
 		int ytile,ytile2,ytile3;
 		int ValeurTile,ValeurTil2, ValeurTil3;
@@ -155,6 +157,22 @@ public class Collision {
 	
 		if(ValeurTile!=0 && ValeurTile!=7 ) {
 			return true;
+		}
+		return false;
+	}
+	
+	public static boolean collisionEnnemiDroite (Personnage personnage , ObservableList<Ennemi> listeEnnemi) {
+		for(int i=0 ; i<listeEnnemi.size() ; i++) {
+			if( personnage.getX()<=listeEnnemi.get(i).getX() &&  personnage.getX()+40>=listeEnnemi.get(i).getX() && !listeEnnemi.get(i).getId().equals(personnage.getId())) 
+				return true;
+		}
+		return false;
+	}
+	
+	public static boolean collisionEnnemiGauche (Personnage personnage , ObservableList<Ennemi> listeEnnemi) {
+		for(int i=0 ; i<listeEnnemi.size() ; i++) {
+			if( personnage.getX()+40>=listeEnnemi.get(i).getX()+40 &&  personnage.getX()<=listeEnnemi.get(i).getX()+40 && !listeEnnemi.get(i).getId().equals(personnage.getId())) 
+				return true;
 		}
 		return false;
 	}
