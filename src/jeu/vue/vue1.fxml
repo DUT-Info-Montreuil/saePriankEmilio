@@ -188,12 +188,12 @@
          <font>
             <Font size="30.0" />
          </font></Text>
-      <Label fx:id="labelNumManches" layoutX="250.0" layoutY="50.0" text="manche numero : 1" textFill="RED">
+      <Label fx:id="labelNumManches" layoutY="50.0" text="manche : 1" textFill="RED">
          <font>
             <Font name="Franklin Gothic Medium" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="labelNbennemiRestant" layoutX="600.0" layoutY="80.0" text="zombie restant : 0" textFill="RED">
+      <Label fx:id="labelNbennemiRestant" layoutY="80.0" text="zombie restant : 0" textFill="RED">
          <font>
             <Font name="Franklin Gothic Medium" size="24.0" />
          </font>

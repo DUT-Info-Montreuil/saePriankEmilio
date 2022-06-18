@@ -1,11 +1,9 @@
 package jeu.controller;
 //IMPORT
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -120,11 +118,11 @@ public class Controller implements Initializable{
 	private void initAnimation() {
 		gameLoop = new Timeline();
 		env=new Environnement(gameLoop);
-		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche num�ro :"+nouv.intValue()));
+		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche :"+nouv.intValue()));
 		if (env.getListeEnnemi().isEmpty()) {
 			env.ajtmanche();
 		}
-		env.getNbEnnemiProperty().addListener((obse,old,nouv)-> labelNbennemiRestant.setText("zombie restant:"+nouv.intValue()));
+		env.getNbEnnemiProperty().addListener((obse,old,nouv)-> labelNbennemiRestant.setText("zombies restant:"+nouv.intValue()));
 		this.imagesCraft = new ArrayList<>();
 		imagesCraft.add(ImageCraftEpeeBois);
 		imagesCraft.add(ImageCraftEpeePierre);
@@ -168,7 +166,7 @@ public class Controller implements Initializable{
 				Duration.seconds(0.05), 
 				(ev ->{			
 					if(env.getTempsPourmanche()==30 && env.isMancheLancer()==true) {
-						env.ajouter();
+						env.ajouterTroisEnnemis();
 						
 						env.setFalsemancheLancer();
 					}

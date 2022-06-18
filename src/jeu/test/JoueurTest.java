@@ -20,7 +20,7 @@ class JoueurTest {
 	@Test 
 	//l'ennemi est a la meme position que le joueur et demarre avec 5 pv
 	final void testAttaquer() {
-		env.ajouter(e);
+		env.ajouterEnnemi(e);
 		
 		//main
 		j.setObjetEquiper(12);

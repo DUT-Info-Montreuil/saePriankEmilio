@@ -60,10 +60,10 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 			
 				System.out.println(env.getListeEnnemi());
 				if (test==0) {
-					env.ajouter(new Ennemi(120));		
+					env.ajouterEnnemi(new Ennemi(120));		
 					test++;
 				}else
-				env.ajouter(new Ennemi(120));			
+				env.ajouterEnnemi(new Ennemi(120));			
 				    
 			
 			case U :
@@ -127,7 +127,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				System.out.println("case epee choisi");
 				env.getJoueur().setCaseChoisi(1);
 				matChoisi.setTranslateY(545);
-				matChoisi.setTranslateX(40);
+				matChoisi.setTranslateX(41);
 				matChoisi.setVisible(true);
 				
 				break;

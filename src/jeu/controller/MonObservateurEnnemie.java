@@ -28,7 +28,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		env.getNbEnnemiProperty().addListener((arg0, arg1, nouv) ->changerManche(nouv));
 		}
 	public void onChanged(javafx.collections.ListChangeListener.Change<? extends Ennemi> c) {
-			System.out.println("�a change");
+			System.out.println("on change");
 			
 			while(c.next()){
 				// on ajoute les nouveau ennemie
