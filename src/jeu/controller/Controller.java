@@ -111,7 +111,7 @@ public class Controller implements Initializable{
 	private void initAnimation() {
 		gameLoop = new Timeline();
 		env=new Environnement(gameLoop);
-		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche numéro :"+nouv.intValue()));
+		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche numï¿½ro :"+nouv.intValue()));
 		if (env.getListeEnnemi().isEmpty()) {
 			env.ajtmanche();
 		}
@@ -134,7 +134,8 @@ public class Controller implements Initializable{
 		
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		block();
-		vueMap = new VueMap(carte, env.getJoueur());
+	
+		vueMap = new VueMap(carte, env);
 		vueMap.afficherMap();
 		
 	

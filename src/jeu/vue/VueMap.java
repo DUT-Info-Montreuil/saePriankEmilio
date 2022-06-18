@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import jeu.modele.Environnement;
 import jeu.modele.Joueur;
 import jeu.modele.Map;
 
@@ -16,7 +17,7 @@ public class VueMap {
 	private Map map;
 	private Joueur joueur;
 	
-	public VueMap(TilePane carte , Joueur j) {
+	public VueMap(TilePane carte , Environnement env) {
 		imageActive = new ImageView();
 		imagesMap = new ArrayList<>();
 		imagesMap.add(new Image("jeu/modele/image/map/ciel.png")); //0 ciel
@@ -27,10 +28,11 @@ public class VueMap {
 		imagesMap.add(new Image("jeu/modele/image/map/pierre.png")); //5 pierre
 		imagesMap.add(new Image("jeu/modele/image/map/metal.png")); //6 metal
 		imagesMap.add(new Image("jeu/modele/image/map/haut.png")); //7 haut de la map
-		this.map = new Map();
+		
+		this.map = env.getMap();
 		this.tabMap = map.getTab();
 		this.carte = carte; 
-		this.joueur = j;
+		this.joueur = env.getJoueur();
 		
 		this.imageRessources = new ArrayList<>();
 		this.imageRessources.add(new Image("jeu/modele/image/map/bois.png"));
@@ -78,13 +80,19 @@ public class VueMap {
 		carte.getChildren().remove(joueur.constructionGauchePlacer());
 		carte.getChildren().add(joueur.constructionGauchePlacer(), new ImageView (imageRessources.get(joueur.getMatChoisi()) ));
 	}
+	
+	
 	public void actualiserMapDroiteCasser() {
-		carte.getChildren().remove(joueur.constructionDroiteCasser());
-		carte.getChildren().add(joueur.constructionDroiteCasser(), new ImageView(imagesMap.get(0)));
+		if(map.getPvBlock(joueur.constructionDroiteCasser()) <=0) {
+			carte.getChildren().remove(joueur.constructionDroiteCasser());
+			carte.getChildren().add(joueur.constructionDroiteCasser(), new ImageView(imagesMap.get(0)));
+		}
 	}
 	public void actualiserMapGaucheCasser() {
-		carte.getChildren().remove(joueur.constructionGaucheCasser());
-		carte.getChildren().add( joueur.constructionGaucheCasser(), new ImageView(imagesMap.get(0)));
+		if(map.getPvBlock(joueur.constructionGaucheCasser()) <=0) {
+			carte.getChildren().remove(joueur.constructionGaucheCasser());
+			carte.getChildren().add( joueur.constructionGaucheCasser(), new ImageView(imagesMap.get(0)));
+		}
 	}
 
 	
@@ -92,20 +100,14 @@ public class VueMap {
 	public int[] getTabMap() {
 		return tabMap;
 	}
-
 	public void setTabMap(int[] tabMap) {
 		this.tabMap = tabMap;
 	}
-
 	public Map getEnv() {
 		return map;
 	}
-
 	public void setEnv(Map env) {
 		this.map = env;
 	}
-	
-	
-	
-	
+		
 }

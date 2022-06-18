@@ -230,7 +230,7 @@ public class Environnement {
 		if(Collision.graviter(this.joueur,getTabMap())) 
 			this.joueur.setNbSaut(0);
 		
-		//gestion des déplacements des ennemi
+		//gestion des dï¿½placements des ennemi
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
 			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>joueur.getX() && ennemi.getX()<joueur.getX()+20)||(ennemi.getX()<joueur.getX() && ennemi.getX()>joueur.getX()-20))) {
@@ -268,5 +268,12 @@ public class Environnement {
 		}
 		
 
+	}
+
+	public Map getMap() {
+		return mape;
+	}
+	public int getnbResource() {
+		return listeResource.get(joueur.getMatChoisi()).getNbResourceProperty().getValue();
 	}
 }

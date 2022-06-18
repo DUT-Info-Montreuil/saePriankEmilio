@@ -3,7 +3,7 @@ package jeu.modele;
 import java.util.ArrayList;
 
 public class Construction {
-	
+
 	//Variables
 	private int valTabDroitePlacer;
 	private int valTabGauchePlacer;	
@@ -15,6 +15,8 @@ public class Construction {
 	private ArrayList<Integer> tuileCassable;
 	private int nbTuileParLigne;
 	private Environnement env;
+	private int[] pvMap;
+
 	//Construceur
 	public Construction(Environnement env ) {
 		this.env=env;
@@ -29,96 +31,174 @@ public class Construction {
 		tuileCassable.add(4);
 		tuileCassable.add(5);
 		tuileCassable.add(6);
-		
+
 		this.map = env.getTabMap();
 		this.joueur =env.getJoueur();
-		
+		this.pvMap = env.getMap().getTabPvBlock();
+
 		this.valTabDroitePlacer = map[joueur.constructionDroitePlacer()];	
 		this.valTabGauchePlacer = map[joueur.constructionGauchePlacer()];	
 		this.valTabDroiteCasser = map[joueur.constructionDroiteCasser()];	
 		this.valTabGaucheCasser = map[joueur.constructionGaucheCasser()];
-		
+
 		this.nbTuileParLigne = 20;
-		
+
 	}
+
+	//	0 epeeBois
+	//	1 epeePierre
+	//	2 epeeMetal
+	//	3 hacheBois
+	//	4 hachePierre
+	//	5 hacheMetal
+	//	6 piocheBois
+	//	7 piochePierre
+	//	8 piocheMetal
+	//	9 bandage
+	//	10 kitDeSoin
+	//	11 pistolet
+	//	12 carrerVide
+
 	
 	//DROITE
 	//placer
 	public boolean peutPlacerDroite() {
-		
-		if(env.getListeResource().get(joueur.getMatChoisi()).getNbResourceProperty().getValue() > 0  && Collision.graviter(joueur, map) && tuileDure.contains(map[joueur.constructionDroitePlacer()+nbTuileParLigne] ) && joueur.getObjetEquiperProperty().getValue()==joueur.getMatChoisi()+13 )
+		if(env.getnbResource() > 0  && Collision.graviter(joueur, map) && tuileDure.contains(map[joueur.constructionDroitePlacer()+nbTuileParLigne] ) && joueur.getObjetEquiper()==joueur.getMatChoisi()+13 )
 			return (!tuileDure.contains(valTabDroitePlacer));
 		return false;
 	}
 	public void placerTuileDroite() {
 		map[joueur.constructionDroitePlacer()] = joueur.getMatChoisi()+4;
+		pvMap[joueur.constructionDroitePlacer()] = 5;
 		joueur.getEnv().getListeResource().get(joueur.getMatChoisi()).EnleverResource(1);
 	}
+
 	//casser
 	public boolean peutCasserDroite() {
-		if (valTabDroiteCasser==4 && (joueur.getObjetEquiperProperty().getValue()==3 ||joueur.getObjetEquiperProperty().getValue()==4 || joueur.getObjetEquiperProperty().getValue()==5 ||joueur.getObjetEquiperProperty().getValue()==12 )) {
+		//bois
+		if (valTabDroiteCasser==4 && (joueur.getObjetEquiper()==3 ||joueur.getObjetEquiper()==4 || joueur.getObjetEquiper()==5 ||joueur.getObjetEquiper()==12 )) {
 			System.out.println("on casse du bois");
 			return tuileCassable.contains(valTabDroiteCasser);
-		}else if (valTabDroiteCasser==5 && (joueur.getObjetEquiperProperty().getValue()==6 ||joueur.getObjetEquiperProperty().getValue()==7 || joueur.getObjetEquiperProperty().getValue()==8 )) {
+			//pierre
+		}else if (valTabDroiteCasser==5 && (joueur.getObjetEquiper()==6 ||joueur.getObjetEquiper()==7 || joueur.getObjetEquiper()==8 )) {
 			System.out.println("on casse de la pierre");
 			return tuileCassable.contains(valTabDroiteCasser);
-		}else if (valTabDroiteCasser==6 && (joueur.getObjetEquiperProperty().getValue()==7 ||joueur.getObjetEquiperProperty().getValue()==8)) {
+			//metal
+		}else if (valTabDroiteCasser==6 && (joueur.getObjetEquiper()==6 || joueur.getObjetEquiper()==7 ||joueur.getObjetEquiper()==8)) {
 			System.out.println("on casse du metal");
 			return tuileCassable.contains(valTabDroiteCasser);
 		}
 		return false;
 	}
-	
 	public void casserTuileDroite() {
-		map[joueur.constructionDroiteCasser()] = 0;
-		if(valTabDroiteCasser==4)
-			joueur.getEnv().AjouterResource("bois");
-		
-		else if (valTabDroiteCasser == 5)
-			joueur.getEnv().AjouterResource("pierre");
-		else
-			joueur.getEnv().AjouterResource("metal");
-			
+		System.out.println(pvMap[joueur.constructionDroiteCasser()]-1);
+		if(valTabDroiteCasser==4) {
+			if(joueur.getObjetEquiper() == 12) 
+				casserDroite(1, "bois");
+			else if(joueur.getObjetEquiper() == 3)
+				casserDroite(2, "bois");
+			else if(joueur.getObjetEquiper() == 4)
+				casserDroite(3, "bois");
+			else if(joueur.getObjetEquiper() == 5)
+				casserDroite(5, "bois");
+		}
+		else if(valTabDroiteCasser==5) {
+			if(joueur.getObjetEquiper() == 6) 
+				casserDroite(2, "pierre");
+			else if(joueur.getObjetEquiper() == 7)
+				casserDroite(3, "pierre");
+			else if(joueur.getObjetEquiper() == 8)
+				casserDroite(5, "pierre");
+		}
+		else if(valTabDroiteCasser==6) {
+			if(joueur.getObjetEquiper() == 6) 
+				casserDroite(1, "metal");
+			else if(joueur.getObjetEquiper() == 7)
+				casserDroite(2, "metal");
+			else if(joueur.getObjetEquiper() == 8)
+				casserDroite(5, "metal");
+		}
+
 	}
 
-	
+	public void casserDroite( int degat, String resource) {
+		if(pvMap[joueur.constructionDroiteCasser()] > 0) 
+			pvMap[joueur.constructionDroiteCasser()] = pvMap[joueur.constructionDroiteCasser()]-degat;
+		if(pvMap[joueur.constructionDroiteCasser()] <=0) {
+			map[joueur.constructionDroiteCasser()] = 0;
+			joueur.getEnv().AjouterResource(resource);
+		}
+	}
 	
 	//GAUCHE
 	//placer
 	public boolean peutPlacerGauche() {
-		if(joueur.getEnv().getListeResource().get(joueur.getMatChoisi()).getNbResourceProperty().getValue() > 0 &&  Collision.graviter(joueur, map) && tuileDure.contains(map[joueur.constructionGauchePlacer()+nbTuileParLigne] )&& joueur.getObjetEquiperProperty().getValue()==joueur.getMatChoisi()+13)
+		if(env.getnbResource() > 0 &&  Collision.graviter(joueur, map) && tuileDure.contains(map[joueur.constructionGauchePlacer()+nbTuileParLigne] )&& joueur.getObjetEquiper()==joueur.getMatChoisi()+13)
 			return !tuileDure.contains(valTabGauchePlacer);
 		return false;
 	}
 	public void placerTuileGauche() {
 		map[joueur.constructionGauchePlacer()] = joueur.getMatChoisi() + 4;
+		pvMap[joueur.constructionGauchePlacer()] = 5;
 		joueur.getEnv().getListeResource().get(joueur.getMatChoisi()).EnleverResource(1);
 	}
+	
 	//casser
 	public boolean peutCasserGauche() {
-		if (valTabGaucheCasser==4 && (joueur.getObjetEquiperProperty().getValue()==3 ||joueur.getObjetEquiperProperty().getValue()==4 || joueur.getObjetEquiperProperty().getValue()==5 ||joueur.getObjetEquiperProperty().getValue()==12 )) {
+		if (valTabGaucheCasser==4 && (joueur.getObjetEquiper()==3 ||joueur.getObjetEquiper()==4 || joueur.getObjetEquiper()==5 ||joueur.getObjetEquiper()==12 )) {
 			System.out.println("on casse du bois");
 			return tuileCassable.contains(valTabGaucheCasser);
-		}else if (valTabGaucheCasser==5 && (joueur.getObjetEquiperProperty().getValue()==6 ||joueur.getObjetEquiperProperty().getValue()==7 || joueur.getObjetEquiperProperty().getValue()==8 )) {
+		}else if (valTabGaucheCasser==5 && (joueur.getObjetEquiper()==6 ||joueur.getObjetEquiper()==7 || joueur.getObjetEquiper()==8 )) {
 			System.out.println("on casse de la pierre");
 			return tuileCassable.contains(valTabGaucheCasser);
-		}else if (valTabGaucheCasser==6 && (joueur.getObjetEquiperProperty().getValue()==7 ||joueur.getObjetEquiperProperty().getValue()==8)) {
+		}else if (valTabGaucheCasser==6 && (joueur.getObjetEquiper()==6 || joueur.getObjetEquiper()==7 ||joueur.getObjetEquiper()==8)) {
 			System.out.println("on casse du metal");
 			return tuileCassable.contains(valTabGaucheCasser);
 		}return false;
 	}
+
 	public void casserTuileGauche() {
-		map[joueur.constructionGaucheCasser()] = 0;
-		if(valTabGaucheCasser==4)
-			joueur.getEnv().AjouterResource("bois");
-		else if (valTabGaucheCasser == 5)
-			joueur.getEnv().AjouterResource("pierre");
-		else
-			joueur.getEnv().AjouterResource("metal");
+		//bois
+		if(valTabGaucheCasser==4) {
+			if(joueur.getObjetEquiper() == 12) 
+				casserGauche(1, "bois");
+			else if(joueur.getObjetEquiper() == 3)
+				casserGauche(2, "bois");
+			else if(joueur.getObjetEquiper() == 4)
+				casserGauche(3, "bois");
+			else if(joueur.getObjetEquiper() == 5)
+				casserGauche(5, "bois");
+		}
+		//pierre
+		else if(valTabGaucheCasser==5) {
+			if(joueur.getObjetEquiper() == 6) 
+				casserGauche(2, "pierre");
+			else if(joueur.getObjetEquiper() == 7)
+				casserGauche(3, "pierre");
+			else if(joueur.getObjetEquiper() == 8)
+				casserGauche(5, "pierre");
+		}
+		//metal
+		else if(valTabGaucheCasser==6) {
+			if(joueur.getObjetEquiper() == 6) 
+				casserGauche(1, "metal");
+			else if(joueur.getObjetEquiper() == 7)
+				casserGauche(2, "metal");
+			else if(joueur.getObjetEquiper() == 8)
+				casserGauche(5, "metal");
+		}
 	}
+	public void casserGauche( int degat, String resource) {
+		if(pvMap[joueur.constructionGaucheCasser()] > 0) 
+			pvMap[joueur.constructionGaucheCasser()] = pvMap[joueur.constructionGaucheCasser()]-degat;
+		if(pvMap[joueur.constructionGaucheCasser()] <=0) {
+			map[joueur.constructionGaucheCasser()] = 0;
+			joueur.getEnv().AjouterResource(resource);
+		}
+	}
+
 	
-	
-	
+
 	//Getters
 	public int getValTabDroite() {
 		return valTabDroitePlacer;
@@ -147,8 +227,11 @@ public class Construction {
 	public ArrayList<Integer> getTuileCassable() {
 		return tuileCassable;
 	}
+	public int getNumObjetEquipe() {
+		return joueur.getObjetEquiper();
+	}
 
-	
+
 	//Setters
 	public void setValTabDroite(int valTabDroite) {
 		this.valTabDroitePlacer = valTabDroite;
