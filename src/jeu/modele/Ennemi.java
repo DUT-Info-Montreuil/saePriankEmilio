@@ -14,7 +14,7 @@ public class Ennemi extends Personnage{
 	private boolean droite,gauche,saute;
 	private String id;
 	private boolean mort;
-	
+	public static int compteur=1;
 	public Ennemi(int i) {
 		this.mort=false;
 		
@@ -24,8 +24,9 @@ public class Ennemi extends Personnage{
 		this.directionProperty =new SimpleIntegerProperty(0);
 		this.vitesse = 4;
 		this.pvProperty = new SimpleIntegerProperty(5);
-		int compteur=1;
+		
 		this.id="A"+compteur;
+		compteur++;
 	}
 	
 	public boolean isMort() {
@@ -146,5 +147,7 @@ public class Ennemi extends Personnage{
 		this.pvProperty.setValue(pv);
 	}
 	
-	
+	public String toString() {
+		return "je suis le monstre numero+ "+id+"ma pos x est "+xProperty.get();
+	}
 }

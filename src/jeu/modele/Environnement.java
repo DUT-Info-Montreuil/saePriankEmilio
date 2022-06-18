@@ -114,6 +114,7 @@ public class Environnement {
 	}
 
 	public void agit() {
+	
 		for (int i = 0; i < listeProjectile.size(); i++) {
 			Projectile projectile = listeProjectile.get(i);
 			switch (projectile.getDirection()) {
