@@ -62,7 +62,7 @@ public class Environnement {
 				tempsPourmanche=30;
 				mancheLancer=true;
 			}
-		}, 30000);
+		}, 100);
 	}
 	
 	public void setFalsemancheLancer() {

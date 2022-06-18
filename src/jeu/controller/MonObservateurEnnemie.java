@@ -12,11 +12,13 @@ import jeu.modele.Environnement;
 public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 
 	private Pane conteneur;
+	private Pane root;
 	private ArrayList<Image> images;
 	private Environnement env;
-	public MonObservateurEnnemie(Pane conteneur ,Environnement env) {
+	public MonObservateurEnnemie(Pane conteneur,Pane root ,Environnement env) {
 		super();
 		this.conteneur=conteneur;
+		this.root=root;
 		this.env=env;
 		this.images = new ArrayList<>();
 		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiNeutre.png"));
@@ -65,8 +67,13 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 	}
 
 	private void changerManche(Number nouv) {
-		if (env.getNummeroMancheProperty().intValue()==20 && nouv.intValue()==0) {
+		if (env.getNummeroMancheProperty().intValue()==2 && nouv.intValue()==0) {
 			System.out.println("c'est gagner");
+			root.getChildren().removeAll();
+			ImageView imgWin=new ImageView("jeu/modele/image/kelawin.png");
+			imgWin.setFitWidth(800);
+			imgWin.setFitHeight(600);
+			root.getChildren().add(imgWin);
 			env.arreterLeJeu();
 		}
 		else if (nouv.intValue()==0) {
