@@ -135,7 +135,6 @@ public class Environnement {
 			case 1:
 				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
-					System.out.println("mur");
 				}
 				for(int j=listeEnnemi.size()-1; j>=0;j--){
 					Ennemi ennemi = listeEnnemi.get(j);
@@ -145,7 +144,6 @@ public class Environnement {
 					}
 				}
 				if (projectile.getFini()) {
-					System.out.println("finito");
 					listeProjectile.remove(projectile);
 				}
 				else if (projectile.getX()<projectile.getXarriver()) 
@@ -156,7 +154,6 @@ public class Environnement {
 			case 2:
 				if (Collision.collisionBalleGauche(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
-					System.out.println("mur");
 				}
 				for(int j=listeEnnemi.size()-1; j>=0;j--){
 					Ennemi a = listeEnnemi.get(j);
@@ -166,7 +163,6 @@ public class Environnement {
 					}
 				}
 				if (projectile.getFini()) {
-					System.out.println("finito");
 					listeProjectile.remove(projectile);
 				}
 				else if (projectile.getX()>projectile.getXarriver())
@@ -181,31 +177,24 @@ public class Environnement {
 
 		//projectile ennemi
 		for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
-
 			ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
 			Sorcier ennemiSorcier=projectile.getEnnemi();
 			switch (projectile.getDirection()) {
-
 			//Projectile tirer a droite
 			case 1:
 				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
-					System.out.println("mur");
 				}
 				if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
-					System.out.println("on blesse");
 					joueur.blesser();
 					projectile.toucher();
 				}
 				if (projectile.getFini()) {
-					System.out.println("finito ennemi");
 					listeProjectileEnnemi.remove(projectile);
 					ennemiSorcier.setaTirer(false);
-
 				}
 				else if (projectile.getX()<projectile.getXarriver()) 
 					projectile.allerAdroite();
-
 				else {
 					listeProjectileEnnemi.remove(projectile);
 					ennemiSorcier.setaTirer(false);
@@ -215,7 +204,6 @@ public class Environnement {
 			case 2:
 				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
-					System.out.println("mur");
 				}
 				if(((projectile.getX()<(joueur.getX())&& (projectile.getX()>joueur.getX()-10) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
 					joueur.blesser();
@@ -223,7 +211,6 @@ public class Environnement {
 
 				}
 				if (projectile.getFini()) {
-					System.out.println("finito ennemi");
 					listeProjectileEnnemi.remove(projectile);
 					ennemiSorcier.setaTirer(false);
 				}
@@ -286,11 +273,8 @@ public class Environnement {
 							int temp = 10;
 							@Override
 							public void run() {
-								if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
-
+								if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) 
 									temp--;
-									System.out.println(temp);
-								}
 								else {
 									toucher = false;
 									cancel();
