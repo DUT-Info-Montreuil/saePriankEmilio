@@ -1,6 +1,6 @@
 package jeu.modele;
 
-
+import java.util.ArrayList;
 
 public class Map {
 
@@ -12,8 +12,8 @@ public class Map {
 	//5 pierre
 	//6 metal
 	//7 haut de la map
-	
-	private int[] carte= {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,		
+
+	private int[] carte1= {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,		
 		 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -29,29 +29,47 @@ public class Map {
 		 3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,
 		 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3};
 	
-	private int[] tabPvBlock = new int[carte.length];  
 	
+	private int[] carte2= {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,		
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+			 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+			 3,3,3,1,1,1,1,3,1,1,1,3,3,3,3,3,3,3,3,1,
+			 3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,
+			 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3};
+	
+	private int[] tabPvBlock1 = new int[carte1.length];  
+
 	public Map () {
+
 		pvBlock();
 	}
 	
 	public void pvBlock() {
-		for(int i=0 ; i < carte.length-1 ; i++) {
-			if(carte[i] == 4 || carte[i] == 5 || carte[i] == 6)
-				tabPvBlock[i] = 5;
+		for(int i=0 ; i < carte1.length-1 ; i++) {
+			if(carte1[i] == 4 || carte1[i] == 5 || carte1[i] == 6)
+				tabPvBlock1[i] = 5;
 			else
-				tabPvBlock[i] = 0;
+				tabPvBlock1[i] = 0;
 		}
 	}
 	
 	//getter
 	public int[] getTabPvBlock() {
-		return tabPvBlock;
+		return tabPvBlock1;
 	}
 	public int getPvBlock(int valTab) {
-		return tabPvBlock[valTab];
+		return tabPvBlock1[valTab];
 	}
 	public int[] getTab () {
-		return this.carte;
+		return this.carte1;
 	}
 }

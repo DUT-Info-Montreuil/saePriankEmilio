@@ -24,9 +24,9 @@ public class Projectile {
 		this.vitesses=vitesses;
 		this.id="P"+compteur;
 		if (direction==1) {
-			this.xarriver=xProperty.getValue()+150;
+			this.xarriver=xProperty.getValue()+200;
 		}else 
-			this.xarriver=xProperty.getValue()-150;
+			this.xarriver=xProperty.getValue()-200;
 	compteur++;
 	}
 

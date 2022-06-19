@@ -107,8 +107,8 @@ public class Environnement {
 
 	public void ajouterTroisEnnemis() {
 		//this.listeEnnemi.add(new Ennemi(140,this));
-		this.listeEnnemi.add(new Sorcier(20,this));
-		this.listeEnnemi.add(new Ennemi(60,this));
+		this.listeEnnemi.add(new Sorcier(220,this));
+		//this.listeEnnemi.add(new Ennemi(280,this));
 
 	}
 
@@ -121,7 +121,12 @@ public class Environnement {
 	}
 
 	public void agit() {
-		System.out.println(listeProjectileEnnemi);
+		
+		for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
+			System.out.println(listeProjectileEnnemi.get(i).getId());
+			//System.out.println(listeProjectileEnnemi.get(i).getDirection());
+		}
+	
 		
 		
 		
@@ -279,7 +284,7 @@ public class Environnement {
 		//projectile ennemi
 		for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
 			
-			ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
+				ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
 				Sorcier ennemiSorcier=projectile.getEnnemi();
 			switch (projectile.getDirection()) {
 			
@@ -288,17 +293,17 @@ public class Environnement {
 					projectile.toucher();
 					System.out.println("mur");
 				}
-				if((projectile.getX()>joueur.getX() || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+				if((projectile.getX()>joueur.getX()-60|| (projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
 						System.out.println("on blesse");
 						joueur.blesser();
 						projectile.toucher();
-						ennemiSorcier.setaTirer(false);
+						
 	
 				}
 				if (projectile.getFini()) {
 					System.out.println("finito ennemi");
 					listeProjectileEnnemi.remove(projectile);
-					
+					ennemiSorcier.setaTirer(false);
 					
 				}
 				else if (projectile.getX()<projectile.getXarriver()) 
@@ -310,14 +315,14 @@ public class Environnement {
 				}
 				break;
 			case 2:
-				if (Collision.collisionBalleGauche(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
 					System.out.println("mur");
 				}
-				if((projectile.getX()<(joueur.getX()+40) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+				if((projectile.getX()<(joueur.getX()) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
 						joueur.blesser();
 						projectile.toucher();
-						ennemiSorcier.setaTirer(false);
+						
 					}
 				if (projectile.getFini()) {
 					System.out.println("finito ennemi");
@@ -333,11 +338,13 @@ public class Environnement {
 				break;
 			default:
 				break;
+				
 			}
-			listeProjectileEnnemi.removeAll();
+			
+			
 		}
 		
-		
+		listeProjectileEnnemi.removeAll();
 		
 		//graviter du joueur
 		if(!Collision.graviter(this.joueur,getTabMap())&& !this.joueur.getSaute() || this.joueur.getNbSaut()==6 || Collision.collisionHaut(this.joueur,getTabMap()) &&this.joueur.getSaute() ) 
