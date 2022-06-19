@@ -16,10 +16,10 @@ public class Sorcier extends Ennemi{
 	
 	public void tirrer() {
 			if (getX()>getEnv().getJoueur().getX()) {
-				getEnv().ajouterProjectileEnnemie(new ProjectileEnnemi(getEnv(), getX(), getY(), 8, 2,this));
+				getEnv().ajouterProjectileEnnemie(new ProjectileEnnemi(getEnv(), getX(), getY(), 5, 2,this));
 				
 			}else
-				getEnv().ajouterProjectileEnnemie(new ProjectileEnnemi(getEnv(), getX(), getY(), 8, 1,this));
+				getEnv().ajouterProjectileEnnemie(new ProjectileEnnemi(getEnv(), getX(), getY(), 5, 1,this));
 			
 	}
 	

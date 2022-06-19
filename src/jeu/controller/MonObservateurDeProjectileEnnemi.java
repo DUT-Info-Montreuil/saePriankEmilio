@@ -29,8 +29,8 @@ public class MonObservateurDeProjectileEnnemi implements ListChangeListener<Proj
 					imgBalle.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
 					imgBalle.translateXProperty().bind(nouveau.getxProperty().add(50));
 					imgBalle.translateYProperty().bind(nouveau.getyProperty().add(6));
-					imgBalle.setFitWidth(20);
-					imgBalle.setFitHeight(20);
+					imgBalle.setFitWidth(30);
+					imgBalle.setFitHeight(30);
 					if(nouveau.getDirection()==2)//on oriente la boule de feu en fonction de la direction
 						imgBalle.setRotate(380);
 					else
