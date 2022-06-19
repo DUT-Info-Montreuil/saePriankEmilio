@@ -96,7 +96,10 @@ public class VueMap {
 		}
 	}
 
-	
+	public void actualiser(int i, int resource) {
+		carte.getChildren().remove(i);
+		carte.getChildren().add( i, new ImageView(imagesMap.get(resource)));
+	}
 	
 	public int[] getTabMap() {
 		return tabMap;

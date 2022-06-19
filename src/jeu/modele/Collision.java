@@ -125,7 +125,7 @@ public class Collision {
 		ValeurTile=tabMap[(xtile+(ytile*20))];
 		ValeurTil2=tabMap[(xtile+(ytile2*20))];
 		ValeurTil3=tabMap[(xtile+(ytile3*20))];
-		if(!tuileSauter.contains(ValeurTile)  || !tuileSauter.contains(ValeurTil2)  || !tuileSauter.contains(ValeurTil3) ) {
+		if(!tuileSauter.contains(ValeurTile)  || !tuileSauter.contains(ValeurTil2)  || !tuileSauter.contains(ValeurTil3) && personnage.getX()>0) {
 			return true;
 		}
 		return false;

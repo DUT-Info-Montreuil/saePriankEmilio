@@ -4,6 +4,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -60,7 +63,7 @@ public class Controller implements Initializable{
 	//VARIABLES
 
 	private Timeline gameLoop;//boucle du jeu
-	
+	private Timer chrono2;
 
 	private Construction construction; // Placer/Casser 
 	private VueMap vueMap; //Vue de la Map
@@ -76,11 +79,6 @@ public class Controller implements Initializable{
 		gameLoop.play();
 		
 	}
-	
-
-	
-	
-	
 	
 	//GESTION DES TOUCHES
 	@FXML
@@ -167,7 +165,17 @@ public class Controller implements Initializable{
 				(ev ->{			
 					if(  env.isMancheLancer()==true) {
 						env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
+						
 						env.setFalsemancheLancer();
+						if(env.getNummeroMancheProperty().getValue() >=2 && env.getNummeroMancheProperty().getValue() <6) {
+							ajouterResource(176, 4);
+							ajouterResource(192, 4);
+							ajouterResource(198, 4);
+						}else if(env.getNummeroMancheProperty().getValue() >=6 && env.getNummeroMancheProperty().getValue() <11) {
+							ajouterResource(176, 5);
+							ajouterResource(192, 5);
+							ajouterResource(198, 5);
+						}
 					}
 					
 
@@ -222,6 +230,11 @@ public class Controller implements Initializable{
 				}
 			}
 		});
+	}
+	
+	public void ajouterResource(int i, int resource) {
+		env.getMap().changementMap(i,resource);
+		vueMap.actualiser(i,resource);
 	}
 	
 	

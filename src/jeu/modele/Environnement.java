@@ -109,10 +109,10 @@ public class Environnement {
 
 	}
 	public void ajouterNEnnemi(int n) {
-		int distance = 40;
+		int distance = 0;
 		for (int i=0 ; i<n ;i++) {
 			this.listeEnnemi.add(new Ennemi(distance));
-			distance-=120;
+			distance = distance - 1;
 			
 		}
 	}
