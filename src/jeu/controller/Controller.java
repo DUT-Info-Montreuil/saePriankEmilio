@@ -149,6 +149,8 @@ public class Controller implements Initializable{
 		//this.ajouterEnnemi();
 		this.env.getListeEnnemi().addListener(new MonObservateurEnnemie(conteneur,root,env));
 		this.env.getListeProjectile().addListener(new MonObservateurDeProjectile(conteneur));
+		this.env.getListeProjectileEnnemi().addListener(new MonObservateurDeProjectileEnnemi(conteneur));
+		
 		new VueJoueur(conteneur, env.getJoueur());
 		this.env.getJoueur().nbCoeurProperty().addListener(new ObeservateurPv(new VuePv(env.getJoueur(), root), env.getJoueur()));
 		this.env.getJoueur().getNbBouclierProperty().addListener(new ObservateurBouclier(new VueBouclier(env.getJoueur(), root), env.getJoueur()));

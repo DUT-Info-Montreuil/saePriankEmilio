@@ -1,6 +1,8 @@
 package jeu.modele.projectile;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import jeu.modele.Environnement;
 
@@ -8,14 +10,16 @@ public class Projectile {
 	private IntegerProperty xProperty,yProperty;
 	private int vitesses;
 	private int direction;
-	private boolean fini=false;
+	private BooleanProperty finiProperty;
 	private  int xarriver;
 	public static int compteur=1;
 	private String id;
-	
+	private Environnement env;
 	public Projectile(Environnement env,int x, int y,int vitesses,int direction) {
+		this.env=env;
 		this.xProperty=new SimpleIntegerProperty(x);
 		this.yProperty=new SimpleIntegerProperty(y);
+		this.finiProperty=new SimpleBooleanProperty(false);
 		this.direction=direction;
 		this.vitesses=vitesses;
 		this.id="P"+compteur;
@@ -23,7 +27,7 @@ public class Projectile {
 			this.xarriver=xProperty.getValue()+500;
 		}else 
 			this.xarriver=xProperty.getValue()-500;
-	
+	compteur++;
 	}
 
 
@@ -66,7 +70,11 @@ public class Projectile {
 	}
 
 	public boolean getFini() {
-		return fini;
+		return finiProperty.getValue();
+	}
+	
+	public final BooleanProperty getFiniProperty() {
+		return finiProperty;
 	}
 	
 	public int getDirection() {
@@ -78,10 +86,15 @@ public class Projectile {
 
 
 	public void toucher() {
-		this.fini=true;
+		this.finiProperty.setValue(true);;
 	}
 	
 	public String toString() {
 		return this.id;
+	}
+
+
+	public Environnement getEnv() {
+		return env;
 	}
 }

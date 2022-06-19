@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jeu.modele.projectile.Projectile;
+import jeu.modele.projectile.ProjectileEnnemi;
 import jeu.modele.resource.Resource;
 
 public class Environnement {
@@ -19,6 +20,7 @@ public class Environnement {
 	private ArrayList<Resource> listeResource;
 	private ObservableList<Ennemi> listeEnnemi;
 	private ObservableList<Projectile> listeProjectile;
+	private ObservableList<ProjectileEnnemi> listeProjectileEnnemi;
 	private Timeline gameloop;
 	private IntegerProperty nummeroMancheProperty;
 	private IntegerProperty nbEnnemiProperty;
@@ -29,11 +31,12 @@ public class Environnement {
 	private int tempsPourmanche=0;
 	private boolean mancheLancer;
 	private boolean ennemiMort;
-
+	private int sorcierOuNormal=0;
 	public Environnement(Timeline gameloop) {
 		this.gameloop=gameloop;
 		this.listeEnnemi= FXCollections.observableArrayList();
 		this.listeProjectile= FXCollections.observableArrayList();
+		this.listeProjectileEnnemi= FXCollections.observableArrayList();
 		this.joueur=new Joueur(this);
 		this.mape = new Map();
 		this.nummeroMancheProperty=new SimpleIntegerProperty(0);
@@ -103,16 +106,22 @@ public class Environnement {
 	}
 
 	public void ajouterTroisEnnemis() {
-		this.listeEnnemi.add(new Ennemi(140));
-		this.listeEnnemi.add(new Ennemi(100));
-		this.listeEnnemi.add(new Ennemi(190));
+		this.listeEnnemi.add(new Ennemi(140,this));
+		this.listeEnnemi.add(new Ennemi(100,this));
+		this.listeEnnemi.add(new Ennemi(190,this));
 
 	}
 	public void ajouterNEnnemi(int n) {
 		int distance = 0;
 		for (int i=0 ; i<n ;i++) {
-			this.listeEnnemi.add(new Ennemi(distance));
-			distance = distance - 1;
+			if (sorcierOuNormal%2==0) {
+				this.listeEnnemi.add(new Ennemi(distance,this));
+				this.sorcierOuNormal++;
+			}
+			else {
+				this.listeEnnemi.add(new Sorcier(distance,this));
+				this.sorcierOuNormal++;
+			}distance = distance - 1;
 			
 		}
 	}
@@ -120,6 +129,10 @@ public class Environnement {
 	
 	public void ajouterProjectile(Projectile e) {
 		this.listeProjectile.add(e);
+	}
+	
+	public void ajouterProjectileEnnemie(ProjectileEnnemi e) {
+		this.listeProjectileEnnemi.add(e);
 	}
 
 	public void agit() {
@@ -173,6 +186,71 @@ public class Environnement {
 				break;
 			}
 		}
+		
+		//projectile ennemi
+				for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
+					
+						ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
+						Sorcier ennemiSorcier=projectile.getEnnemi();
+					switch (projectile.getDirection()) {
+					
+					//Projectile tirer a droite
+					case 1:
+						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+							projectile.toucher();
+							System.out.println("mur");
+						}
+						if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+								System.out.println("on blesse");
+								joueur.blesser();
+								projectile.toucher();
+						}
+						if (projectile.getFini()) {
+							System.out.println("finito ennemi");
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+							
+						}
+						else if (projectile.getX()<projectile.getXarriver()) 
+							projectile.allerAdroite();
+						
+						else {
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						break;
+						//Projectile tirer a gauche
+					case 2:
+						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+							projectile.toucher();
+							System.out.println("mur");
+						}
+						if(((projectile.getX()<(joueur.getX())&& (projectile.getX()>joueur.getX()-10) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
+								joueur.blesser();
+								projectile.toucher();
+								
+							}
+						if (projectile.getFini()) {
+							System.out.println("finito ennemi");
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						else if (projectile.getX()>projectile.getXarriver())
+							projectile.allerAGauche();
+						else {
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						break;
+					default:
+						break;
+						
+					}
+					
+					
+				}
+				
+				listeProjectileEnnemi.removeAll();
 		//graviter du joueur
 		if(!Collision.graviter(this.joueur,getTabMap())&& !this.joueur.getSaute() || this.joueur.getNbSaut()==6 || Collision.collisionHaut(this.joueur,getTabMap()) &&this.joueur.getSaute() ) 
 			this.joueur.tomber();
@@ -181,59 +259,86 @@ public class Environnement {
 		//gestion des deplacements et attaques des ennemis 
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
-			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
-				nbTimer++;
-				if(nbTimer ==1) {
-					chrono = new Timer();
-					this.setEnnemiMort(false);
-					chrono.schedule(new TimerTask() {	
-						int temp = 10;
-						@Override
-						public void run() {
-							if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
-								
-								temp--;
-								System.out.println(temp);
-							}
-							else {
-								toucher = false;
-								cancel();
-								nbTimer = 0;
-							}
-							if(ennemi.isMort()) {
-								toucher = false;
-								ennemiMort = true;
-								cancel();
-								nbTimer = -1;
-							}
-							if (temp==0 ) {
-								toucher = true;
-								cancel();
-								nbTimer = -1;
-							}
-						}
-					}, 0,100);
+			
+			if (ennemi instanceof Sorcier) {
+				if(getJoueur().getX()+350 < this.ennemi.getX()  ) {
+					ennemi.setGauche(true);
+					ennemi.setDroite(false);
+					ennemi.setDirection(2);
+					if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
+						this.ennemi.allerAGauche();
 				}
-				if(toucher && nbTimer==0 && !ennemiMort)
-					getJoueur().blesser();
-			}
-			if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
-				ennemi.setGauche(true);
-				ennemi.setDroite(false);
-				ennemi.setDirection(2);
-				if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
-					this.ennemi.allerAGauche();
-			}
-			else if(getJoueur().getX() > this.ennemi.getX()+40  ) {
-				ennemi.setDroite(true);
-				ennemi.setGauche(false);
-				ennemi.setDirection(1);
-				if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
-					this.ennemi.allerADroite();
-			}
-			else {
-				ennemi.setDroite(false);
-				ennemi.setGauche(false);
+				else if(getJoueur().getX() > this.ennemi.getX()+350  ) {
+					ennemi.setDroite(true);
+					ennemi.setGauche(false);
+					ennemi.setDirection(1);
+					if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
+						this.ennemi.allerADroite();
+				}
+				else {
+					ennemi.setDroite(false);
+					ennemi.setGauche(false);
+				}
+				if (!((Sorcier) ennemi).getATirerProperty().get()) {
+					((Sorcier) ennemi).tirrer();
+				((Sorcier) ennemi).setaTirer(true);
+				}
+			
+			}else {
+				if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
+					nbTimer++;
+					if(nbTimer ==1) {
+						chrono = new Timer();
+						this.setEnnemiMort(false);
+						chrono.schedule(new TimerTask() {	
+							int temp = 10;
+							@Override
+							public void run() {
+								if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
+									
+									temp--;
+									System.out.println(temp);
+								}
+								else {
+									toucher = false;
+									cancel();
+									nbTimer = 0;
+								}
+								if(ennemi.isMort()) {
+									toucher = false;
+									ennemiMort = true;
+									cancel();
+									nbTimer = -1;
+								}
+								if (temp==0 ) {
+									toucher = true;
+									cancel();
+									nbTimer = -1;
+								}
+							}
+						}, 0,100);
+					}
+					if(toucher && nbTimer==0 && !ennemiMort)
+						getJoueur().blesser();
+				}
+				if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
+					ennemi.setGauche(true);
+					ennemi.setDroite(false);
+					ennemi.setDirection(2);
+					if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
+						this.ennemi.allerAGauche();
+				}
+				else if(getJoueur().getX() > this.ennemi.getX()+40  ) {
+					ennemi.setDroite(true);
+					ennemi.setGauche(false);
+					ennemi.setDirection(1);
+					if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
+						this.ennemi.allerADroite();
+				}
+				else {
+					ennemi.setDroite(false);
+					ennemi.setGauche(false);
+				}
 			}
 			//graviter des ennemi
 			if(Collision.collisionDroiteEnnemi(ennemi,getTabMap()) && ennemi.isDroite()  || Collision.collisionGaucheEnnemi(ennemi,getTabMap()) && ennemi.isGauche() ) { 
@@ -266,6 +371,12 @@ public class Environnement {
 	public ObservableList<Projectile> getListeProjectile() {
 		return listeProjectile;
 	}
+	
+	
+	public ObservableList<ProjectileEnnemi> getListeProjectileEnnemi() {
+		return listeProjectileEnnemi;
+	}
+	
 	public final IntegerProperty getNbEnnemiProperty() {
 		return nbEnnemiProperty;
 	}
