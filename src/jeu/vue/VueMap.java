@@ -10,6 +10,7 @@ import jeu.modele.Joueur;
 import jeu.modele.Map;
 
 public class VueMap {
+	
 	private int[] tabMap;
 	private TilePane carte;
 	private ImageView imageActive;

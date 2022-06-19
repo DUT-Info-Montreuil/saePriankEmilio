@@ -1,12 +1,8 @@
 package jeu.controller;
 //IMPORT
 import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -21,7 +17,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import jeu.modele.Collision;
 import jeu.modele.Construction;
-import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.ObeservateurPv;
 import jeu.modele.ObservateurBouclier;
@@ -34,9 +29,9 @@ import jeu.vue.VuePv;
 public class Controller implements Initializable{
 	//VARIABLES FXML
     @FXML
-    private Text textCraft;
+    private Text textCraft; //text qui affiche le prix des objets
     @FXML
-	private Pane menuCraft;
+	private Pane menuCraft; //Panel de craft
 	@FXML
 	private Pane root;//ROOT
 	@FXML
@@ -44,40 +39,35 @@ public class Controller implements Initializable{
 	@FXML
 	private Pane conteneur;//JOUEUR
 	@FXML
-	private HBox inventaireObjet;
+	private HBox inventaireObjet; //inventaire des objets du joueur
 	@FXML
-	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin,labelNumManches,labelNbennemiRestant;
-	
+	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin,labelNumManches,labelNbennemiRestant; //label
 	@FXML
-	private ImageView case1, case2, case3, case4, case5, case6;
+	private ImageView case1, case2, case3, case4, case5, case6; //image des cases de l'inventaire objet
 	@FXML
 	private ImageView ImageCraftBandage, ImageCraftEpeeBois, ImageCraftEpeeMetal, ImageCraftEpeePierre, ImageCraftHacheBois, ImageCraftHacheMetal, 
-	ImageCraftHachePierre, ImageCraftKitDeSoin, ImageCraftPiocheBois, ImageCraftPiocheMetal, ImageCraftPiochePierre, ImageCraftPistolet, ImageCraftBouclier;
+	ImageCraftHachePierre, ImageCraftKitDeSoin, ImageCraftPiocheBois, ImageCraftPiocheMetal, ImageCraftPiochePierre, ImageCraftPistolet, ImageCraftBouclier; //images des objets
 	@FXML
-	private ImageView craftInventaire;
+	private ImageView craftInventaire; //image du panel de craft
 	@FXML
-	private ImageView matSelectioner;
+	private ImageView matSelectioner; //materiaux selectionner
+	@FXML
+	private ImageView imgObjetDansLesMains; //objet que tien le joueur
 	
-	@FXML
-	private ImageView imgObjetDansLesMains;
 	//VARIABLES
-
 	private Timeline gameLoop;//boucle du jeu
-	private Timer chrono2;
-
 	private Construction construction; // Placer/Casser 
 	private VueMap vueMap; //Vue de la Map
-	private ArrayList<ImageView> imagesCraft;
-	private Environnement env;
+	private ArrayList<ImageView> imagesCraft; //les images des objets
+	private Environnement env; //environnement du jeu
+	private ArrayList<ImageView> imagesCase; //images des cases
+	private ArrayList<Label> labels; //les labels
 
 	//INITIALISATION
 	@Override
-	
-	public void initialize(URL location, ResourceBundle resources) {
-		
+	public void initialize(URL location, ResourceBundle resources) {	
 		initAnimation();
-		gameLoop.play();
-		
+		gameLoop.play();	
 	}
 	
 	//GESTION DES TOUCHES
@@ -93,34 +83,30 @@ public class Controller implements Initializable{
 	public void deplacementJoueur() {
 		if(this.env.getJoueur().getGauche()) {
 			env.getJoueur().setDirection(false);
-			if(!Collision.collisionGauche(env.getJoueur(), env.getTabMap())) {
+			if(!Collision.collisionGauche(env.getJoueur(), env.getTabMap())) 
 				env.getJoueur().allerAGauche();
-			}
 		}
 		if(this.env.getJoueur().getDroite()) {
 			env.getJoueur().setDirection(true);
-			if(!Collision.collisionDroite(env.getJoueur(), env.getTabMap())) {
+			if(!Collision.collisionDroite(env.getJoueur(), env.getTabMap())) 
 				env.getJoueur().allerADroite();
-			}
 		}
-		if(this.env.getJoueur().getSaute()) {
-			if(!Collision.collisionHaut(env.getJoueur(), env.getTabMap())) {
-				env.getJoueur().sauter();
-			}		
-		}
+		if(this.env.getJoueur().getSaute()) 
+			if(!Collision.collisionHaut(env.getJoueur(), env.getTabMap())) 
+				env.getJoueur().sauter();	
 	}
 	
 
 	
 	//BOUCLE DU JEU
 	private void initAnimation() {
-		gameLoop = new Timeline();
-		env=new Environnement(gameLoop);
-		env.getNummeroMancheProperty().addListener((obse,old,nouv)-> labelNumManches.setText("manche :"+nouv.intValue()));
-		if (env.getListeEnnemi().isEmpty()) {
-			env.ajtmanche();
-		}
-		env.getNbEnnemiProperty().addListener((obse,old,nouv)-> labelNbennemiRestant.setText("zombies restant:"+nouv.intValue()));
+		this.gameLoop = new Timeline();
+		this.gameLoop.setCycleCount(Timeline.INDEFINITE);
+		this.env=new Environnement(gameLoop);
+		this.env.getNummeroMancheProperty().addListener((obse,old,nouv)-> this.labelNumManches.setText("manche :"+nouv.intValue()));
+		if (env.getListeEnnemi().isEmpty()) 
+			this.env.ajtmanche();
+		this.env.getNbEnnemiProperty().addListener((obse,old,nouv)-> this.labelNbennemiRestant.setText("zombies restant:"+nouv.intValue()));
 		this.imagesCraft = new ArrayList<>();
 		imagesCraft.add(ImageCraftEpeeBois);
 		imagesCraft.add(ImageCraftEpeePierre);
@@ -136,35 +122,43 @@ public class Controller implements Initializable{
 		imagesCraft.add(ImageCraftPistolet);
 		imagesCraft.add(ImageCraftBouclier);
 		
+		imagesCase = new ArrayList<>();
+		imagesCase.add(case1);
+		imagesCase.add(case2);
+		imagesCase.add(case3);
+		imagesCase.add(case4);
+		imagesCase.add(case5);
+		imagesCase.add(case6);
 		
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		block();
-	
-		vueMap = new VueMap(carte, env);
-		vueMap.afficherMap();
+		labels = new ArrayList<>();
+		labels.add(labelBois);
+		labels.add(labelPierre);
+		labels.add(labelMetal);
+		labels.add(labelNbDeBandage);
+		labels.add(labelNbDeKitDeSoin);
 		
-		
-		
+		this.gestionSouris();
+		this.vueMap = new VueMap(carte, env);
+		this.vueMap.afficherMap();	
+		new VueJoueur(conteneur, env.getJoueur());
 		
 		//this.ajouterEnnemi();
 		this.env.getListeEnnemi().addListener(new MonObservateurEnnemie(conteneur,root,env));
 		this.env.getListeProjectile().addListener(new MonObservateurDeProjectile(conteneur));
 		this.env.getListeProjectileEnnemi().addListener(new MonObservateurDeProjectileEnnemi(conteneur));
-		new VueJoueur(conteneur, env.getJoueur());
 		this.env.getJoueur().nbCoeurProperty().addListener(new ObeservateurPv(new VuePv(env.getJoueur(), root), env.getJoueur()));
 		this.env.getJoueur().getNbBouclierProperty().addListener(new ObservateurBouclier(new VueBouclier(env.getJoueur(), root), env.getJoueur()));
-		new VueInventaire(env, inventaireObjet,labelNbDeBandage,labelNbDeKitDeSoin, labelBois,labelPierre,labelMetal,case1,case2,case3,case4,case5,case6, imgObjetDansLesMains);
+		
+		new VueInventaire(env, inventaireObjet,labels,imagesCase, imgObjetDansLesMains);
 		new gestionnaireDeCraft(env.getJoueur(),textCraft,imagesCraft);
 		this.gestionDesTouches();
 	
 		env.lancerManche();
-			
-			
-		
+				
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.05), 
 				(ev ->{			
-					if(  env.isMancheLancer()==true) {
+					if(env.isMancheLancer()==true) {
 						env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
 						if(env.getNummeroMancheProperty().getValue() ==6) {
 							changementMap(env.getMap().getCarte2());
@@ -202,20 +196,16 @@ public class Controller implements Initializable{
 						env.setFalsemancheLancer();
 					}
 					
-
-					deplacementJoueur();
+					this.deplacementJoueur();
 					env.agit();
-
 				}));
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
-
-	//Placer/Casser les blocks de la map
-	public void block() {
+	public void gestionSouris() {
 		root.setOnMouseClicked(ev -> {
+			//attaquer
 			construction = new Construction(env);
-			
 			if(ev.getButton().equals(MouseButton.PRIMARY)&& (env.getJoueur().getObjetEquiper()==12 || env.getJoueur().getObjetEquiper()==0 || env.getJoueur().getObjetEquiper()==2 || env.getJoueur().getObjetEquiper()==1)) {
 				if (env.getNbEnnemiProperty().get()>0 )
 					env.getJoueur().attaquer();
@@ -231,6 +221,8 @@ public class Controller implements Initializable{
 			else if (ev.getButton().equals(MouseButton.PRIMARY) && env.getJoueur().getObjetEquiperProperty().getValue()==10) {
 				env.getJoueur().utiliserkitDeSoin();
 			}
+			//Placer/Casser les blocks de la map
+			
 			//placer et crafter des bloques a droite
 			else if(env.getJoueur().getDirection()) { // droite
 				if(ev.getButton().equals(MouseButton.PRIMARY) && construction.peutPlacerDroite()) { //placer des blocks
@@ -256,12 +248,13 @@ public class Controller implements Initializable{
 		});
 	}
 	
+	//permet de rajouter une resource sur la map
 	public void ajouterResource(int i, int resource) {
 		env.getMap().ajouterResource(i,resource);
 		vueMap.ajouterResource(i,resource);
 	}
 	
-	
+	//permet de changer de map
 	public void changementMap(int[] tabMap) {
 		env.getMap().changementMap(tabMap);
 		vueMap.actualiser();

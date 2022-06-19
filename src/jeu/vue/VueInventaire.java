@@ -1,4 +1,6 @@
 package jeu.vue;
+import java.util.ArrayList;
+
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,28 +18,28 @@ public class VueInventaire {
 			new Image("jeu/modele/image/utilitaires/piocheMetal.png"),new Image("jeu/modele/image/utilitaires/bandage.png"),
 			new Image("jeu/modele/image/utilitaires/kitDeSoin.png"),new Image("jeu/modele/image/utilitaires/pistolet.png"),
 			new Image("jeu/modele/image/utilitaires/vide.png"),new Image("jeu/modele/image/utilitaires/bois.png"),
-			new Image("jeu/modele/image/utilitaires/pierre.png"),new Image("jeu/modele/image/utilitaires/metal.png"),new Image("jeu/modele/image/utilitaires/pistoletInverser.png")};	
+			new Image("jeu/modele/image/utilitaires/pierre.png"),new Image("jeu/modele/image/utilitaires/metal.png"),
+			new Image("jeu/modele/image/utilitaires/pistoletInverser.png")};	
 	private Joueur joueur;
 	private Environnement env;
 	private Label labelBois,labelPierre,labelMetal,labelNbDeBandage,labelNbDeKitDeSoin;
 	private ImageView case1,case2,case3,case4,case5,case6;
 	private ImageView imgObjetDansLesMains;
 	
-	public VueInventaire(Environnement env,HBox boxInv,Label labelNbDeBandage,Label labelNbDeKitDeSoin,Label labelBois,Label labelPierre,Label labelMetal,
-			ImageView case1,ImageView case2,ImageView case3,ImageView case4,ImageView case5,ImageView case6,ImageView imgObjetDansLesMains) {
+	public VueInventaire(Environnement env, HBox boxInv, ArrayList<Label> labels, ArrayList<ImageView> imagesCase, ImageView imgObjetDansLesMains) {
 		this.env=env;
 		this.joueur=env.getJoueur();
-		this.labelBois=labelBois;
-		this.labelPierre=labelPierre;
-		this.labelMetal=labelMetal;
-		this.labelNbDeBandage=labelNbDeBandage;
-		this.labelNbDeKitDeSoin=labelNbDeKitDeSoin;
-		this.case1=case1;
-		this.case2=case2;
-		this.case3=case3;
-		this.case4=case4;
-		this.case5=case5;
-		this.case6=case6;
+		this.labelBois=labels.get(0);
+		this.labelPierre=labels.get(1);
+		this.labelMetal=labels.get(2);
+		this.labelNbDeBandage=labels.get(3);
+		this.labelNbDeKitDeSoin=labels.get(4);
+		this.case1=imagesCase.get(0);
+		this.case2=imagesCase.get(1);
+		this.case3=imagesCase.get(2);
+		this.case4=imagesCase.get(3);
+		this.case5=imagesCase.get(4);
+		this.case6=imagesCase.get(5);
 		afficherInventaireObjet();
 		this.imgObjetDansLesMains=imgObjetDansLesMains;
 		this.imgObjetDansLesMains.translateXProperty().bind(joueur.xProperty().add(40));
@@ -45,9 +47,7 @@ public class VueInventaire {
 		
 	}
 	
-	public void afficherInventaireObjet() {
-		
-		
+	public void afficherInventaireObjet() {		
 		env.getNbResourceProperty("bois").addListener((obse,old,nouv)-> this.labelBois.setText(nouv.toString()));
 		env.getNbResourceProperty("pierre").addListener((obse,old,nouv)-> this.labelPierre.setText(nouv.toString()));
 		env.getNbResourceProperty("metal").addListener((obse,old,nouv)-> this.labelMetal.setText(nouv.toString()));		
@@ -58,15 +58,9 @@ public class VueInventaire {
 		joueur.getObjetEquiperProperty().addListener((obse,old,nouv)-> equiperObjetDansLesMains(nouv.intValue()));		
 		joueur.getDirectionProperty().addListener((obse,old,nouv)-> retournerObjet(nouv));
 		
-		for (int i = 0; i < joueur.getInventaireObjet().getInventaire().size(); i++) {
-			
-			joueur.getInventaireObjet().getInventaire().get(i).getNumObjetCase().addListener((obse,old,nouv)-> actualiser(nouv));
-		}				
+		for (int i = 0; i < joueur.getInventaireObjet().getInventaire().size(); i++) 		
+			joueur.getInventaireObjet().getInventaire().get(i).getNumObjetCase().addListener((obse,old,nouv)-> actualiser(nouv));				
 	}
-	
-	
-	
-	
 
 	public void actualiser(Number nouv) {	
 			switch (nouv.intValue()) {
@@ -105,16 +99,12 @@ public class VueInventaire {
 				break;
 			case 11 : 
 				case4.setImage(tabImage[11]);
-				break;
-		
+				break;	
 			}
-			System.out.println(joueur.getInventaireObjet().getInventaire().toString());
 		}	
 	
 	public void equiperObjetDansLesMains(int i) {
-		System.out.println("Objet équiper :"+i );
 		imgObjetDansLesMains.setImage(tabImage[i]);
-		
 	}
 	
 	private void retournerObjet(Boolean nouv) {

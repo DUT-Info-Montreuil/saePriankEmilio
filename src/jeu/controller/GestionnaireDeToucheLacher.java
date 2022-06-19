@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import jeu.modele.Joueur;
 
 public class GestionnaireDeToucheLacher implements EventHandler<KeyEvent>{
+	
 	private Pane root;
 	private Joueur joueur;
 
@@ -13,9 +14,9 @@ public class GestionnaireDeToucheLacher implements EventHandler<KeyEvent>{
 		this.root=root;
 		this.joueur=joueur;
 	}
+	
 	@Override
 	public void handle(KeyEvent arg0) {
-		
 		root.setOnKeyReleased(ev -> {
 			switch(ev.getCode()){
 			case Q :

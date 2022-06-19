@@ -14,6 +14,7 @@ import jeu.modele.projectile.ProjectileEnnemi;
 import jeu.modele.resource.Resource;
 
 public class Environnement {
+
 	private Joueur joueur;
 	private Resource bois,pierre,metal;
 	private Map mape;
@@ -99,16 +100,13 @@ public class Environnement {
 			metal.EnleverResource(i);
 
 	}
-	
-	
+
 	public void ajouterEnnemi(Ennemi e) {
 		this.listeEnnemi.add(e);
 	}
 
-	public void ajouterTroisEnnemis() {
-		this.listeEnnemi.add(new Ennemi(140,this));
-		this.listeEnnemi.add(new Ennemi(100,this));
-		this.listeEnnemi.add(new Ennemi(190,this));
+	public void ajouterSoricer(Sorcier s) {
+		this.listeEnnemi.add(s);
 
 	}
 	public void ajouterNEnnemi(int n) {
@@ -122,18 +120,15 @@ public class Environnement {
 		}
 	}
 
-	
-
 	public void ajouterProjectile(Projectile e) {
 		this.listeProjectile.add(e);
 	}
-	
+
 	public void ajouterProjectileEnnemie(ProjectileEnnemi e) {
 		this.listeProjectileEnnemi.add(e);
 	}
 
 	public void agit() {
-	
 		for (int i = 0; i < listeProjectile.size(); i++) {
 			Projectile projectile = listeProjectile.get(i);
 			switch (projectile.getDirection()) {
@@ -183,71 +178,71 @@ public class Environnement {
 				break;
 			}
 		}
-		
+
 		//projectile ennemi
-				for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
-					
-						ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
-						Sorcier ennemiSorcier=projectile.getEnnemi();
-					switch (projectile.getDirection()) {
-					
-					//Projectile tirer a droite
-					case 1:
-						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
-							projectile.toucher();
-							System.out.println("mur");
-						}
-						if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
-								System.out.println("on blesse");
-								joueur.blesser();
-								projectile.toucher();
-						}
-						if (projectile.getFini()) {
-							System.out.println("finito ennemi");
-							listeProjectileEnnemi.remove(projectile);
-							ennemiSorcier.setaTirer(false);
-							
-						}
-						else if (projectile.getX()<projectile.getXarriver()) 
-							projectile.allerAdroite();
-						
-						else {
-							listeProjectileEnnemi.remove(projectile);
-							ennemiSorcier.setaTirer(false);
-						}
-						break;
-						//Projectile tirer a gauche
-					case 2:
-						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
-							projectile.toucher();
-							System.out.println("mur");
-						}
-						if(((projectile.getX()<(joueur.getX())&& (projectile.getX()>joueur.getX()-10) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
-								joueur.blesser();
-								projectile.toucher();
-								
-							}
-						if (projectile.getFini()) {
-							System.out.println("finito ennemi");
-							listeProjectileEnnemi.remove(projectile);
-							ennemiSorcier.setaTirer(false);
-						}
-						else if (projectile.getX()>projectile.getXarriver())
-							projectile.allerAGauche();
-						else {
-							listeProjectileEnnemi.remove(projectile);
-							ennemiSorcier.setaTirer(false);
-						}
-						break;
-					default:
-						break;
-						
-					}
-					
-					
+		for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
+
+			ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
+			Sorcier ennemiSorcier=projectile.getEnnemi();
+			switch (projectile.getDirection()) {
+
+			//Projectile tirer a droite
+			case 1:
+				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+					projectile.toucher();
+					System.out.println("mur");
 				}
-				
-				listeProjectileEnnemi.removeAll();
+				if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+					System.out.println("on blesse");
+					joueur.blesser();
+					projectile.toucher();
+				}
+				if (projectile.getFini()) {
+					System.out.println("finito ennemi");
+					listeProjectileEnnemi.remove(projectile);
+					ennemiSorcier.setaTirer(false);
+
+				}
+				else if (projectile.getX()<projectile.getXarriver()) 
+					projectile.allerAdroite();
+
+				else {
+					listeProjectileEnnemi.remove(projectile);
+					ennemiSorcier.setaTirer(false);
+				}
+				break;
+				//Projectile tirer a gauche
+			case 2:
+				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+					projectile.toucher();
+					System.out.println("mur");
+				}
+				if(((projectile.getX()<(joueur.getX())&& (projectile.getX()>joueur.getX()-10) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
+					joueur.blesser();
+					projectile.toucher();
+
+				}
+				if (projectile.getFini()) {
+					System.out.println("finito ennemi");
+					listeProjectileEnnemi.remove(projectile);
+					ennemiSorcier.setaTirer(false);
+				}
+				else if (projectile.getX()>projectile.getXarriver())
+					projectile.allerAGauche();
+				else {
+					listeProjectileEnnemi.remove(projectile);
+					ennemiSorcier.setaTirer(false);
+				}
+				break;
+			default:
+				break;
+
+			}
+
+
+		}
+
+		listeProjectileEnnemi.removeAll();
 		//graviter du joueur
 		if(!Collision.graviter(this.joueur,getTabMap())&& !this.joueur.getSaute() || this.joueur.getNbSaut()==6 || Collision.collisionHaut(this.joueur,getTabMap()) &&this.joueur.getSaute() ) 
 			this.joueur.tomber();
@@ -256,7 +251,7 @@ public class Environnement {
 		//gestion des deplacements et attaques des ennemis 
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
-			
+
 			if (ennemi instanceof Sorcier) {
 				if(getJoueur().getX()+200 < this.ennemi.getX()  ) {
 					ennemi.setGauche(true);
@@ -278,9 +273,9 @@ public class Environnement {
 				}
 				if (!((Sorcier) ennemi).getATirerProperty().get()) {
 					((Sorcier) ennemi).tirrer();
-				((Sorcier) ennemi).setaTirer(true);
+					((Sorcier) ennemi).setaTirer(true);
 				}
-			
+
 			}else {
 				if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
 					nbTimer++;
@@ -292,7 +287,7 @@ public class Environnement {
 							@Override
 							public void run() {
 								if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
-									
+
 									temp--;
 									System.out.println(temp);
 								}
@@ -394,7 +389,6 @@ public class Environnement {
 			return this.metal;
 		return null;
 	}
-
 	public ArrayList<Resource> getListeResource() {
 		return listeResource;
 	}
@@ -407,7 +401,6 @@ public class Environnement {
 			return this.metal.getNbResourceProperty();
 		return null;
 	}
-
 	public int getNbResource(String matiere) {
 		if (matiere.equals("bois")) 
 			return bois.getNbResourceProperty().intValue();

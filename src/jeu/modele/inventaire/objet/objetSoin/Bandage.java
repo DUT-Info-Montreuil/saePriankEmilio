@@ -6,7 +6,7 @@ import jeu.modele.inventaire.objet.ObjetInventaire;
 public class Bandage extends ObjetInventaire{
 
 	public Bandage() {
-		super("bandage",9);
+		super(9);
 	}
 
 }

@@ -1,8 +1,6 @@
 package jeu.modele;
 
 import java.util.ArrayList;
-import java.util.Observable;
-
 import javafx.collections.ObservableList;
 
 public class Collision {

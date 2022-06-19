@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import jeu.modele.Environnement;
 
 public class Projectile {
+	
 	private IntegerProperty xProperty,yProperty;
 	private int vitesses;
 	private int direction;
@@ -23,38 +24,36 @@ public class Projectile {
 			this.xarriver=xProperty.getValue()+500;
 		}else 
 			this.xarriver=xProperty.getValue()-500;
-	
 	}
 
 
 	public void allerAdroite() {
-	System.out.println("x:"+getX()+"y:"+getY());
 		int npos = getX()+this.vitesses;
 			this.xProperty.setValue(npos);
 	}
 	
 	public void allerAGauche() {
-
 		int npos = getX()-this.vitesses;
 			this.xProperty.setValue(npos);
 	}
+	
+	public void toucher() {
+		this.fini=true;
+	}
 
+	//getter
 	public IntegerProperty getxProperty() {
 		return xProperty;
 	}
-
 	public IntegerProperty getyProperty() {
 		return yProperty;
 	}
-
 	public int getX() {
 		return xProperty.getValue();
 	}
-
 	public int getY() {
 		return yProperty.getValue();
 	}
-
 	public int getVitesses() {
 		return vitesses;
 	}
@@ -64,11 +63,9 @@ public class Projectile {
 	public int getXarriver() {
 		return xarriver;
 	}
-
 	public boolean getFini() {
 		return fini;
 	}
-	
 	public int getDirection() {
 		return direction;
 	}
@@ -77,9 +74,7 @@ public class Projectile {
 
 
 
-	public void toucher() {
-		this.fini=true;
-	}
+	
 	
 	public String toString() {
 		return this.id;

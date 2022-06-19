@@ -4,11 +4,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import jeu.vue.VueBouclier;
 
-
 public class ObservateurBouclier implements ChangeListener<Number>  {
 	
 	private VueBouclier bouclier;
 	private Joueur j;
+	
 	public ObservateurBouclier(VueBouclier bouclier,Joueur j) {
 		this.j=j;
 		this.bouclier=bouclier;	

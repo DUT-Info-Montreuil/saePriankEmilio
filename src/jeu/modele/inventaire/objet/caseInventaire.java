@@ -11,8 +11,8 @@ public class caseInventaire {
 	private ObjetInventaire obj;
 	private BooleanProperty estSelectionnerProperty ;
 	private int numCase;
+	
 	public caseInventaire(ObjetInventaire obj,int numcase) {
-		
 		this.numObj=obj.getNumProperty();
 		this.obj=obj;
 		this.estSelectionnerProperty=new SimpleBooleanProperty(false);
@@ -46,11 +46,9 @@ public class caseInventaire {
 	public IntegerProperty getNumObjetCase() {
 		return this.numObj;	
 	}
-	
 	public String toString() {
 		return this.obj.toString();
 	}
-
 	public int getNumCase() {
 		return numCase;
 	}

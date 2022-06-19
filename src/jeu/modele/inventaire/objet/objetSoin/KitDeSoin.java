@@ -6,7 +6,7 @@ import jeu.modele.inventaire.objet.ObjetInventaire;
 public class KitDeSoin extends ObjetInventaire{
 
 	public KitDeSoin() {
-		super("kitDeSoin",10);
+		super(10);
 	}
 
 }

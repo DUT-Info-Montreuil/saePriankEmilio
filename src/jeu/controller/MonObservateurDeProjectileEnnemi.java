@@ -14,13 +14,9 @@ public class MonObservateurDeProjectileEnnemi implements ListChangeListener<Proj
 	public MonObservateurDeProjectileEnnemi(Pane conteneur ) {
 		super();
 		this.conteneur=conteneur;
-		
-		
-		;
 		}
+	
 	public void onChanged(javafx.collections.ListChangeListener.Change<? extends ProjectileEnnemi> c) {
-		System.out.println("�a change");
-		
 		while(c.next()){
 			// on ajoute les nouveau ennemie
 			for(ProjectileEnnemi nouveau: c.getAddedSubList()){
@@ -35,20 +31,14 @@ public class MonObservateurDeProjectileEnnemi implements ListChangeListener<Proj
 						imgBalle.setRotate(380);
 					else
 						imgBalle.setRotate(600);
-					conteneur.getChildren().add(imgBalle);	
-				
-				
+					conteneur.getChildren().add(imgBalle);			
 			}
-			for(ProjectileEnnemi mort: c.getRemoved()){
-				System.out.println(mort.getId());
-					enleverSprite(mort);
-			}
+			for(ProjectileEnnemi mort: c.getRemoved())
+				enleverSprite(mort);
 		}
 	}
+	
 	private void enleverSprite(Projectile mort) {
 		this.conteneur.getChildren().remove(this.conteneur.lookup("#"+mort.getId()));
-
-	}
-
-		
+	}		
 }

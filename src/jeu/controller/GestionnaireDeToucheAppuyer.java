@@ -6,10 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import jeu.modele.Collision;
-import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.Joueur;
-import jeu.modele.inventaire.objet.ObjetVide;
 
 public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 	private Pane root;
@@ -52,19 +50,6 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 					this.joueur.setSaute(true);
 				}		
 				break;
-			case T :
-				env.ajtmanche();
-				break;
-			case Y :
-				if (test==0) {
-					env.ajouterEnnemi(new Ennemi(120,env));		
-					test++;
-				}else
-					env.ajouterEnnemi(new Ennemi(120,env));			
-				break;   
-			case U :
-				joueur.getEnv().AjouterResource("bois");
-				break;
 			case I :
 				if (visible==false) {
 					menuCraft.setVisible(true);
@@ -75,22 +60,6 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 					craftInventaire.setVisible(false);
 					visible=false;
 				}		
-				break;
-			case O :
-				joueur.getEnv().AjouterResource("metal");
-				break;
-			case W :
-				joueur.getEnv().AjouterResource("pierre");
-				break;
-			case M :
-				joueur.getInventaireObjet().getInventaire().get(0).setObjetDeLaCase(new ObjetVide());
-				joueur.getInventaireObjet().getInventaire().get(1).setObjetDeLaCase(new ObjetVide());
-				joueur.getInventaireObjet().getInventaire().get(2).setObjetDeLaCase(new ObjetVide());
-				joueur.getInventaireObjet().getInventaire().get(3).setObjetDeLaCase(new ObjetVide());
-				joueur.getInventaireObjet().getInventaire().get(4).setObjetDeLaCase(new ObjetVide());
-				joueur.getInventaireObjet().getInventaire().get(5).setObjetDeLaCase(new ObjetVide());
-				System.out.println(joueur.getInventaireObjet().getInventaire().toString());
-				joueur.mettreAzero();
 				break;
 			case F1 : 
 				env.getJoueur().setMatChoisi(0);
@@ -116,67 +85,54 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				env.getJoueur().setObjetEquiper(15);
 				System.out.println("metal choisi");
 				break;
-
 			case F4 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(0).getNumObjetCase().intValue());
-				System.out.println("case epee choisi");
+				System.out.println("case 1 choisi");
 				env.getJoueur().setCaseChoisi(1);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(41);
 				matChoisi.setVisible(true);
-
 				break;
 			case F5 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(1).getNumObjetCase().intValue());
-				System.out.println("case hache choisi");
+				System.out.println("case 2 choisi");
 				env.getJoueur().setCaseChoisi(2);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(86);
 				matChoisi.setVisible(true);
 				break;
-
 			case F6 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(2).getNumObjetCase().intValue());
-				System.out.println("case pioche choisi");
+				System.out.println("case 2 choisi");
 				env.getJoueur().setCaseChoisi(3);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(131);
 				matChoisi.setVisible(true);
 				break;
-
 			case F7 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(3).getNumObjetCase().intValue());
-				System.out.println("case pistolet choisi");
+				System.out.println("case 4 choisi");
 				env.getJoueur().setCaseChoisi(4);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(176);
 				matChoisi.setVisible(true);
 				break;
-
 			case F8 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(4).getNumObjetCase().intValue());
-				System.out.println("case bandage choisi");
+				System.out.println("case 5 choisi");
 				env.getJoueur().setCaseChoisi(5);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(221);
 				matChoisi.setVisible(true);
 				break;
 			case F9 :
-
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(5).getNumObjetCase().intValue());
-				System.out.println("case kit de Soin choisi");
+				System.out.println("case 6 choisi");
 				env.getJoueur().setCaseChoisi(6);
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(281);
 				matChoisi.setVisible(true);
 				break;
-
-
 			default:
 				break;
 			}
