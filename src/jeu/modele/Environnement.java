@@ -123,13 +123,15 @@ public class Environnement {
 	}
 
 	
+
 	public void ajouterProjectile(Projectile e) {
 		this.listeProjectile.add(e);
 	}
-
+	
 	public void ajouterProjectileEnnemie(ProjectileEnnemi e) {
 		this.listeProjectileEnnemi.add(e);
 	}
+
 	public void agit() {
 	
 		for (int i = 0; i < listeProjectile.size(); i++) {
@@ -181,6 +183,71 @@ public class Environnement {
 				break;
 			}
 		}
+		
+		//projectile ennemi
+				for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
+					
+						ProjectileEnnemi projectile = listeProjectileEnnemi.get(i);
+						Sorcier ennemiSorcier=projectile.getEnnemi();
+					switch (projectile.getDirection()) {
+					
+					//Projectile tirer a droite
+					case 1:
+						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+							projectile.toucher();
+							System.out.println("mur");
+						}
+						if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+								System.out.println("on blesse");
+								joueur.blesser();
+								projectile.toucher();
+						}
+						if (projectile.getFini()) {
+							System.out.println("finito ennemi");
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+							
+						}
+						else if (projectile.getX()<projectile.getXarriver()) 
+							projectile.allerAdroite();
+						
+						else {
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						break;
+						//Projectile tirer a gauche
+					case 2:
+						if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
+							projectile.toucher();
+							System.out.println("mur");
+						}
+						if(((projectile.getX()<(joueur.getX())&& (projectile.getX()>joueur.getX()-10) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
+								joueur.blesser();
+								projectile.toucher();
+								
+							}
+						if (projectile.getFini()) {
+							System.out.println("finito ennemi");
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						else if (projectile.getX()>projectile.getXarriver())
+							projectile.allerAGauche();
+						else {
+							listeProjectileEnnemi.remove(projectile);
+							ennemiSorcier.setaTirer(false);
+						}
+						break;
+					default:
+						break;
+						
+					}
+					
+					
+				}
+				
+				listeProjectileEnnemi.removeAll();
 		//graviter du joueur
 		if(!Collision.graviter(this.joueur,getTabMap())&& !this.joueur.getSaute() || this.joueur.getNbSaut()==6 || Collision.collisionHaut(this.joueur,getTabMap()) &&this.joueur.getSaute() ) 
 			this.joueur.tomber();
@@ -189,59 +256,86 @@ public class Environnement {
 		//gestion des deplacements et attaques des ennemis 
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
-			if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
-				nbTimer++;
-				if(nbTimer ==1) {
-					chrono = new Timer();
-					this.setEnnemiMort(false);
-					chrono.schedule(new TimerTask() {	
-						int temp = 7;
-						@Override
-						public void run() {
-							if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
-								
-								temp--;
-								System.out.println(temp);
-							}
-							else {
-								toucher = false;
-								cancel();
-								nbTimer = 0;
-							}
-							if(ennemi.isMort()) {
-								toucher = false;
-								ennemiMort = true;
-								cancel();
-								nbTimer = -1;
-							}
-							if (temp==0 ) {
-								toucher = true;
-								cancel();
-								nbTimer = -1;
-							}
-						}
-					}, 0,100);
+			
+			if (ennemi instanceof Sorcier) {
+				if(getJoueur().getX()+200 < this.ennemi.getX()  ) {
+					ennemi.setGauche(true);
+					ennemi.setDroite(false);
+					ennemi.setDirection(2);
+					if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
+						this.ennemi.allerAGauche();
 				}
-				if(toucher && nbTimer==0 && !ennemiMort)
-					getJoueur().blesser();
-			}
-			if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
-				ennemi.setGauche(true);
-				ennemi.setDroite(false);
-				ennemi.setDirection(2);
-				if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
-					this.ennemi.allerAGauche();
-			}
-			else if(getJoueur().getX() > this.ennemi.getX()+40  ) {
-				ennemi.setDroite(true);
-				ennemi.setGauche(false);
-				ennemi.setDirection(1);
-				if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
-					this.ennemi.allerADroite();
-			}
-			else {
-				ennemi.setDroite(false);
-				ennemi.setGauche(false);
+				else if(getJoueur().getX() > this.ennemi.getX()+200  ) {
+					ennemi.setDroite(true);
+					ennemi.setGauche(false);
+					ennemi.setDirection(1);
+					if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
+						this.ennemi.allerADroite();
+				}
+				else {
+					ennemi.setDroite(false);
+					ennemi.setGauche(false);
+				}
+				if (!((Sorcier) ennemi).getATirerProperty().get()) {
+					((Sorcier) ennemi).tirrer();
+				((Sorcier) ennemi).setaTirer(true);
+				}
+			
+			}else {
+				if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
+					nbTimer++;
+					if(nbTimer ==1) {
+						chrono = new Timer();
+						this.setEnnemiMort(false);
+						chrono.schedule(new TimerTask() {	
+							int temp = 10;
+							@Override
+							public void run() {
+								if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
+									
+									temp--;
+									System.out.println(temp);
+								}
+								else {
+									toucher = false;
+									cancel();
+									nbTimer = 0;
+								}
+								if(ennemi.isMort()) {
+									toucher = false;
+									ennemiMort = true;
+									cancel();
+									nbTimer = -1;
+								}
+								if (temp==0 ) {
+									toucher = true;
+									cancel();
+									nbTimer = -1;
+								}
+							}
+						}, 0,100);
+					}
+					if(toucher && nbTimer==0 && !ennemiMort)
+						getJoueur().blesser();
+				}
+				if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
+					ennemi.setGauche(true);
+					ennemi.setDroite(false);
+					ennemi.setDirection(2);
+					if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
+						this.ennemi.allerAGauche();
+				}
+				else if(getJoueur().getX() > this.ennemi.getX()+40  ) {
+					ennemi.setDroite(true);
+					ennemi.setGauche(false);
+					ennemi.setDirection(1);
+					if(!Collision.collisionDroite(ennemi,getTabMap()) && !Collision.collisionEnnemiDroite(ennemi, listeEnnemi))
+						this.ennemi.allerADroite();
+				}
+				else {
+					ennemi.setDroite(false);
+					ennemi.setGauche(false);
+				}
 			}
 			//graviter des ennemi
 			if(Collision.collisionDroiteEnnemi(ennemi,getTabMap()) && ennemi.isDroite()  || Collision.collisionGaucheEnnemi(ennemi,getTabMap()) && ennemi.isGauche() ) { 
@@ -251,6 +345,7 @@ public class Environnement {
 				ennemi.tomber();	
 		}
 	}
+
 
 	//getter
 	public Map getMap() {
