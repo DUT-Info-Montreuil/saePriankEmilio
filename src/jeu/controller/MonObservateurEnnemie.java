@@ -2,12 +2,14 @@ package jeu.controller;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
+import jeu.modele.Sorcier;
 
 public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 
@@ -33,12 +35,17 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 			while(c.next()){
 				// on ajoute les nouveau ennemie
 				for(Ennemi nouveau: c.getAddedSubList()){
+					
+					if (nouveau instanceof Sorcier) {
+						((Sorcier) nouveau).getATirerProperty().addListener((obse,old,nouv)-> methodePourSorcier(nouveau,nouv));
+					}
+					
 					ImageView r = new ImageView(images.get(0));
 						r.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
 						r.setId(nouveau.getId());
 						r.translateXProperty().bind(nouveau.getXProperty());
 						r.translateYProperty().bind(nouveau.getYProperty());
-						nouveau.getDirection().addListener((obse,old,nouv)-> changerImageDirection(r,nouv.intValue()));
+						nouveau.getDirectionProperty().addListener((obse,old,nouv)-> changerImageDirection(r,nouv.intValue()));
 						conteneur.getChildren().add(r);	
 						env.ajouterUnEnnemiAucompteur();
 						nouveau.getPvProperty().addListener(e-> enleverSprite(nouveau,nouveau.getPv()));
@@ -82,5 +89,11 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		}
 
 	}
+	
+	private void methodePourSorcier(Ennemi ennemi,Boolean nouv) {
+		
+	
+	}
+	
 		
 }

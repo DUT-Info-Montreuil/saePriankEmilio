@@ -163,14 +163,17 @@ public class Collision {
 	
 	public static boolean collisionEnnemiDroite (Personnage personnage , ObservableList<Ennemi> listeEnnemi) {
 		for(int i=0 ; i<listeEnnemi.size() ; i++) {
-			if( personnage.getX()<=listeEnnemi.get(i).getX() &&  personnage.getX()+40>=listeEnnemi.get(i).getX() && !listeEnnemi.get(i).getId().equals(personnage.getId())) 
+		
+			 if( personnage.getX()<=listeEnnemi.get(i).getX() &&  personnage.getX()+40>=listeEnnemi.get(i).getX() && !listeEnnemi.get(i).getId().equals(personnage.getId())) {
 				return true;
+			}
 		}
 		return false;
 	}
 	
 	public static boolean collisionEnnemiGauche (Personnage personnage , ObservableList<Ennemi> listeEnnemi) {
 		for(int i=0 ; i<listeEnnemi.size() ; i++) {
+		
 			if( personnage.getX()+40>=listeEnnemi.get(i).getX()+40 &&  personnage.getX()<=listeEnnemi.get(i).getX()+40 && !listeEnnemi.get(i).getId().equals(personnage.getId())) 
 				return true;
 		}
