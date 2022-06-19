@@ -165,7 +165,7 @@ public class Controller implements Initializable{
 				Duration.seconds(0.05), 
 				(ev ->{			
 					if(  env.isMancheLancer()==true) {
-						//env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
+						env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
 						if(env.getNummeroMancheProperty().getValue() ==6) {
 							changementMap(env.getMap().getCarte2());
 						}
@@ -199,7 +199,6 @@ public class Controller implements Initializable{
 							ajouterResource(224, 6);
 							ajouterResource(198, 6);
 						}
-						env.ajouterTroisEnnemis();
 						env.setFalsemancheLancer();
 					}
 					

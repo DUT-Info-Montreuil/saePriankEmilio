@@ -112,13 +112,14 @@ public class Environnement {
 
 	}
 	public void ajouterNEnnemi(int n) {
-		int distance = 0;
+		int distance = -1;
 		for (int i=0 ; i<n ;i++) {
+			if(getNummeroMancheProperty().getValue() >=11 && i==1)
+				this.listeEnnemi.add(new Sorcier(0,this));
 			this.listeEnnemi.add(new Ennemi(distance,this));
 			distance = distance - 1;
-			
+
 		}
-		this.listeEnnemi.add(new Sorcier(0,this));
 	}
 
 	
@@ -194,7 +195,7 @@ public class Environnement {
 					chrono = new Timer();
 					this.setEnnemiMort(false);
 					chrono.schedule(new TimerTask() {	
-						int temp = 10;
+						int temp = 7;
 						@Override
 						public void run() {
 							if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
