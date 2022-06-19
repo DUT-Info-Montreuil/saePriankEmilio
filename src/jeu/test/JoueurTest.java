@@ -13,7 +13,7 @@ class JoueurTest {
 	Timeline gameloop = new Timeline();
 	Environnement env = new Environnement(gameloop);
 	Joueur j = new Joueur(env);
-	Ennemi e = new Ennemi(40);
+	Ennemi e = new Ennemi(40,env);
 
 	//une tuile = 40x40px, pareil pour la taille du joueur
 

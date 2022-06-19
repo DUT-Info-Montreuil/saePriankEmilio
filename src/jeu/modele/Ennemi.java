@@ -2,26 +2,29 @@ package jeu.modele;
 
 import java.util.Random;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Ennemi extends Personnage{
 	
+	private Environnement env;
 	private IntegerProperty xProperty, yProperty;
 	private IntegerProperty pvProperty;
-	private IntegerProperty directionProperty;
+	private IntegerProperty directionIntProperty;
+	private BooleanProperty directionBoolroperty;
 	private int vitesse;
 	private boolean droite,gauche,saute;
 	private String id;
 	private boolean mort;
 	public static int compteur=1;
-	public Ennemi(int i) {
+	public Ennemi(int i,Environnement env) {
 		this.mort=false;
-		
+		this.env=env;
 		//this.xProperty = new SimpleIntegerProperty(random.nextInt(300 + 250) + 250);
 		this.xProperty = new SimpleIntegerProperty(i);
 		this.yProperty = new SimpleIntegerProperty(360);
-		this.directionProperty =new SimpleIntegerProperty(0);
+		this.directionIntProperty =new SimpleIntegerProperty();
 		this.vitesse = 4;
 		this.pvProperty = new SimpleIntegerProperty(5);
 		
@@ -99,6 +102,10 @@ public class Ennemi extends Personnage{
 		return id;
 	}
 
+	public Environnement getEnv() {
+		return env;
+	}
+
 	public boolean isDroite() {
 		return droite;
 	}
@@ -130,7 +137,7 @@ public class Ennemi extends Personnage{
 	
 	public void setDirection(int i) {
 		
-		this.directionProperty.setValue(i);
+		this.directionIntProperty.set(i);
 	}
 
 	@Override
@@ -139,8 +146,8 @@ public class Ennemi extends Personnage{
 		
 	}
 
-	public IntegerProperty getDirection() {
-		return directionProperty;
+	public IntegerProperty getDirectionProperty() {
+		return directionIntProperty;
 	}
 
 	public void setPv(int pv) {

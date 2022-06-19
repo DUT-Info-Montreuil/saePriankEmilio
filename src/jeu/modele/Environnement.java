@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jeu.modele.projectile.Projectile;
+import jeu.modele.projectile.ProjectileEnnemi;
 import jeu.modele.resource.Resource;
 
 public class Environnement {
@@ -19,6 +20,7 @@ public class Environnement {
 	private ArrayList<Resource> listeResource;
 	private ObservableList<Ennemi> listeEnnemi;
 	private ObservableList<Projectile> listeProjectile;
+	private ObservableList<ProjectileEnnemi> listeProjectileEnnemi;
 	private Timeline gameloop;
 	private IntegerProperty nummeroMancheProperty;
 	private IntegerProperty nbEnnemiProperty;
@@ -34,6 +36,7 @@ public class Environnement {
 		this.gameloop=gameloop;
 		this.listeEnnemi= FXCollections.observableArrayList();
 		this.listeProjectile= FXCollections.observableArrayList();
+		this.listeProjectileEnnemi= FXCollections.observableArrayList();
 		this.joueur=new Joueur(this);
 		this.mape = new Map();
 		this.nummeroMancheProperty=new SimpleIntegerProperty(0);
@@ -60,7 +63,7 @@ public class Environnement {
 			public void run() {
 				mancheLancer=true;
 			}
-		}, 1000);
+		}, 5000);
 	}
 
 	public void enleverUnEnnemiAucompteur() {
@@ -103,18 +106,19 @@ public class Environnement {
 	}
 
 	public void ajouterTroisEnnemis() {
-		this.listeEnnemi.add(new Ennemi(140));
-		this.listeEnnemi.add(new Ennemi(100));
-		this.listeEnnemi.add(new Ennemi(190));
+		this.listeEnnemi.add(new Ennemi(140,this));
+		this.listeEnnemi.add(new Ennemi(100,this));
+		this.listeEnnemi.add(new Ennemi(190,this));
 
 	}
 	public void ajouterNEnnemi(int n) {
 		int distance = 0;
 		for (int i=0 ; i<n ;i++) {
-			this.listeEnnemi.add(new Ennemi(distance));
+			this.listeEnnemi.add(new Ennemi(distance,this));
 			distance = distance - 1;
 			
 		}
+		this.listeEnnemi.add(new Sorcier(0,this));
 	}
 
 	
@@ -122,6 +126,9 @@ public class Environnement {
 		this.listeProjectile.add(e);
 	}
 
+	public void ajouterProjectileEnnemie(ProjectileEnnemi e) {
+		this.listeProjectileEnnemi.add(e);
+	}
 	public void agit() {
 	
 		for (int i = 0; i < listeProjectile.size(); i++) {
@@ -265,6 +272,9 @@ public class Environnement {
 	}
 	public ObservableList<Projectile> getListeProjectile() {
 		return listeProjectile;
+	}
+	public ObservableList<ProjectileEnnemi> getListeProjectileEnnemi() {
+		return listeProjectileEnnemi;
 	}
 	public final IntegerProperty getNbEnnemiProperty() {
 		return nbEnnemiProperty;
