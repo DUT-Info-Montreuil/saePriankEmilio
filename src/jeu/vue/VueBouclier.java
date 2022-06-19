@@ -8,7 +8,7 @@ import jeu.modele.Joueur;
 
 public class VueBouclier {
 	
-	private Image[] tabImage= {new Image("jeu/modele/image/0bouclier.png"),new Image("jeu/modele/image/1bouclier.png"),new Image("jeu/modele/image/2bouclier.png"), new Image("jeu/modele/image/3bouclier.png")};
+	private Image[] tabImage= {new Image("jeu/image/0bouclier.png"),new Image("jeu/image/1bouclier.png"),new Image("jeu/image/2bouclier.png"), new Image("jeu/image/3bouclier.png")};
 	private ImageView imageActive;
 	private Joueur joueur;
 	

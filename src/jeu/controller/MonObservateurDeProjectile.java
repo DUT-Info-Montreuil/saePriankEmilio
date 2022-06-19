@@ -19,7 +19,7 @@ public class MonObservateurDeProjectile implements ListChangeListener<Projectile
 		while(c.next()){
 			// on ajoute les nouveau ennemie
 			for(Projectile nouveau: c.getAddedSubList()){	
-					ImageView	imgBalle= new ImageView(new Image("jeu/modele/image/utilitaires/balle.png"));	
+					ImageView	imgBalle= new ImageView(new Image("jeu/image/utilitaires/balle.png"));	
 					imgBalle.setId(nouveau.getId());
 					imgBalle.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
 					imgBalle.translateXProperty().bind(nouveau.getxProperty().add(50));

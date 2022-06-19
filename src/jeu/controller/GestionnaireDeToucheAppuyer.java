@@ -28,7 +28,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 		this.craftInventaire = InventaireCraft;
 
 		this.matChoisi = new ImageView();
-		matChoisi.setImage(new Image("jeu/modele/image/jaune.png"));
+		matChoisi.setImage(new Image("jeu/image/jaune.png"));
 		matChoisi.setTranslateX(497);
 		matChoisi.setTranslateY(7);
 		matChoisi.setOpacity(0.90);

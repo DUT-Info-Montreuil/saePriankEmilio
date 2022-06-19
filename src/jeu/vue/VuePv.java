@@ -7,8 +7,8 @@ import jeu.modele.Joueur;
 
 public class VuePv {
 	
-	private Image[] tabImage= {new Image("jeu/modele/image/perdue.png"),new Image("jeu/modele/image/1hearts.png"),new Image("jeu/modele/image/2hearts.png"),
-			new Image("jeu/modele/image/3hearts.png"),new Image("jeu/modele/image/4hearts.png"),new Image("jeu/modele/image/hearts.png"),};	
+	private Image[] tabImage= {new Image("jeu/image/perdue.png"),new Image("jeu/image/1hearts.png"),new Image("jeu/image/2hearts.png"),
+			new Image("jeu/image/3hearts.png"),new Image("jeu/image/4hearts.png"),new Image("jeu/image/hearts.png"),};	
 	private ImageView imageActive;
 	private Joueur joueur;
 	

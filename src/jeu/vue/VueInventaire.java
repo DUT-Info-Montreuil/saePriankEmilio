@@ -11,15 +11,15 @@ import jeu.modele.Joueur;
 
 public class VueInventaire {
 		
-	private Image[] tabImage  = {new Image("jeu/modele/image/utilitaires/epeeBois.png"),new Image("jeu/modele/image/utilitaires/epeePierre.png"),
-			new Image("jeu/modele/image/utilitaires/epeeMetal.png"),new Image("jeu/modele/image/utilitaires/hacheBois.png"),
-			new Image("jeu/modele/image/utilitaires/hachePierre.png"),new Image("jeu/modele/image/utilitaires/hacheMetal.png"),
-			new Image("jeu/modele/image/utilitaires/piocheBois.png"),new Image("jeu/modele/image/utilitaires/piochePierre.png"),
-			new Image("jeu/modele/image/utilitaires/piocheMetal.png"),new Image("jeu/modele/image/utilitaires/bandage.png"),
-			new Image("jeu/modele/image/utilitaires/kitDeSoin.png"),new Image("jeu/modele/image/utilitaires/pistolet.png"),
-			new Image("jeu/modele/image/utilitaires/vide.png"),new Image("jeu/modele/image/utilitaires/bois.png"),
-			new Image("jeu/modele/image/utilitaires/pierre.png"),new Image("jeu/modele/image/utilitaires/metal.png"),
-			new Image("jeu/modele/image/utilitaires/pistoletInverser.png")};	
+	private Image[] tabImage  = {new Image("jeu/image/utilitaires/epeeBois.png"),new Image("jeu/image/utilitaires/epeePierre.png"),
+			new Image("jeu/image/utilitaires/epeeMetal.png"),new Image("jeu/image/utilitaires/hacheBois.png"),
+			new Image("jeu/image/utilitaires/hachePierre.png"),new Image("jeu/image/utilitaires/hacheMetal.png"),
+			new Image("jeu/image/utilitaires/piocheBois.png"),new Image("jeu/image/utilitaires/piochePierre.png"),
+			new Image("jeu/image/utilitaires/piocheMetal.png"),new Image("jeu/image/utilitaires/bandage.png"),
+			new Image("jeu/image/utilitaires/kitDeSoin.png"),new Image("jeu/image/utilitaires/pistolet.png"),
+			new Image("jeu/image/utilitaires/vide.png"),new Image("jeu/image/utilitaires/bois.png"),
+			new Image("jeu/image/utilitaires/pierre.png"),new Image("jeu/image/utilitaires/metal.png"),
+			new Image("jeu/image/utilitaires/pistoletInverser.png")};	
 	private Joueur joueur;
 	private Environnement env;
 	private Label labelBois,labelPierre,labelMetal,labelNbDeBandage,labelNbDeKitDeSoin;

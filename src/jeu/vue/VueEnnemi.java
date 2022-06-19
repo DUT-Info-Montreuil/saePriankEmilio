@@ -20,10 +20,10 @@ public class VueEnnemi {
 		this.conteneur = conteneur;
 		this.ennemi = ennemi;
 		this.images = new ArrayList<>();
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiNeutre.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiDroite.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiGauche.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiSaut.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiNeutre.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiDroite.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiGauche.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiSaut.png"));
 		this.imgActive = new ImageView(images.get(0));
 	}
 

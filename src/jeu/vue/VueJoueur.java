@@ -17,14 +17,14 @@ public class VueJoueur {
 	
 	//constructeur
 	public VueJoueur (Pane conteneur, Joueur joueur) {
-		this.imgActive = new ImageView(new Image("jeu/modele/image/personnage/neutre.png"));
+		this.imgActive = new ImageView(new Image("jeu/image/personnage/neutre.png"));
 		this.conteneur = conteneur;
 		this.joueur = joueur;
 		this.images = new ArrayList<>();
-		images.add(new Image("jeu/modele/image/personnage/neutre.png"));
-		images.add(new Image("jeu/modele/image/personnage/droite.png"));
-		images.add(new Image("jeu/modele/image/personnage/gauche.png"));
-		images.add(new Image("jeu/modele/image/personnage/saut.png"));
+		images.add(new Image("jeu/image/personnage/neutre.png"));
+		images.add(new Image("jeu/image/personnage/droite.png"));
+		images.add(new Image("jeu/image/personnage/gauche.png"));
+		images.add(new Image("jeu/image/personnage/saut.png"));
 		this.imgActive = new ImageView(images.get(0));
 		this.imgActive.translateXProperty().bind(joueur.xProperty());
 		this.imgActive.translateYProperty().bind(joueur.yProperty());

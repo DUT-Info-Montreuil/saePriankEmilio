@@ -22,14 +22,14 @@ public class VueMap {
 	public VueMap(TilePane carte , Environnement env) {
 		imageActive = new ImageView();
 		imagesMap = new ArrayList<>();
-		imagesMap.add(new Image("jeu/modele/image/map/ciel.png")); //0 ciel
-		imagesMap.add(new Image("jeu/modele/image/map/terre.png")); //1 terre
-		imagesMap.add(new Image("jeu/modele/image/map/sol.png")); //2 sol avec herbes
-		imagesMap.add(new Image("jeu/modele/image/map/obsidienne.png")); //3 obsidennes
-		imagesMap.add(new Image("jeu/modele/image/map/bois.png")); //4 bois
-		imagesMap.add(new Image("jeu/modele/image/map/pierre.png")); //5 pierre
-		imagesMap.add(new Image("jeu/modele/image/map/metal.png")); //6 metal
-		imagesMap.add(new Image("jeu/modele/image/map/haut.png")); //7 haut de la map
+		imagesMap.add(new Image("jeu/image/map/ciel.png")); //0 ciel
+		imagesMap.add(new Image("jeu/image/map/terre.png")); //1 terre
+		imagesMap.add(new Image("jeu/image/map/sol.png")); //2 sol avec herbes
+		imagesMap.add(new Image("jeu/image/map/obsidienne.png")); //3 obsidennes
+		imagesMap.add(new Image("jeu/image/map/bois.png")); //4 bois
+		imagesMap.add(new Image("jeu/image/map/pierre.png")); //5 pierre
+		imagesMap.add(new Image("jeu/image/map/metal.png")); //6 metal
+		imagesMap.add(new Image("jeu/image/map/haut.png")); //7 haut de la map
 		
 		this.map = env.getMap();
 		this.tabMap = map.getTab();
@@ -37,9 +37,9 @@ public class VueMap {
 		this.joueur = env.getJoueur();
 		
 		this.imageRessources = new ArrayList<>();
-		this.imageRessources.add(new Image("jeu/modele/image/map/bois.png"));
-		this.imageRessources.add(new Image("jeu/modele/image/map/pierre.png"));
-		this.imageRessources.add(new Image("jeu/modele/image/map/metal.png"));
+		this.imageRessources.add(new Image("jeu/image/map/bois.png"));
+		this.imageRessources.add(new Image("jeu/image/map/pierre.png"));
+		this.imageRessources.add(new Image("jeu/image/map/metal.png"));
 	}
 	
 	public void afficherMap() {

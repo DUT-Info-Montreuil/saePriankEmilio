@@ -22,10 +22,10 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		this.root=root;
 		this.env=env;
 		this.images = new ArrayList<>();
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiNeutre.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiDroite.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiGauche.png"));
-		images.add(new Image("jeu/modele/image/personnage/ennemi/ennemiSaut.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiNeutre.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiDroite.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiGauche.png"));
+		images.add(new Image("jeu/image/personnage/ennemi/ennemiSaut.png"));
 		env.getNbEnnemiProperty().addListener((arg0, arg1, nouv) ->changerManche(nouv));
 	}
 
@@ -33,7 +33,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		while(c.next()){
 			// on ajoute les nouveau ennemie
 			for(Ennemi nouveau: c.getAddedSubList()){
-				ImageView chapeauSorcier=new ImageView(new Image("jeu/modele/image/personnage/ennemi/chapeau.png"));
+				ImageView chapeauSorcier=new ImageView(new Image("jeu/image/personnage/ennemi/chapeau.png"));
 				if (nouveau instanceof Sorcier) {						
 					chapeauSorcier.translateXProperty().bind(nouveau.getXProperty().add(14));
 					chapeauSorcier.translateYProperty().bind(nouveau.getYProperty().add(-19));		
@@ -84,7 +84,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		if (env.getNummeroMancheProperty().intValue()==20 && nouv.intValue()==0) {
 			System.out.println("Vous avez gagner !");
 			root.getChildren().removeAll();
-			ImageView imgWin=new ImageView("jeu/modele/image/kelawin.png");
+			ImageView imgWin=new ImageView("jeu/image/kelawin.png");
 			imgWin.setFitWidth(800);
 			imgWin.setFitHeight(600);
 			root.getChildren().add(imgWin);
