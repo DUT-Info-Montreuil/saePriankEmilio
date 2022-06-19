@@ -84,7 +84,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 		if (env.getNummeroMancheProperty().intValue()==20 && nouv.intValue()==0) {
 			System.out.println("Vous avez gagner !");
 			root.getChildren().removeAll();
-			ImageView imgWin=new ImageView("jeu/image/kelawin.png");
+			ImageView imgWin=new ImageView("jeu/image/gg.png");
 			imgWin.setFitWidth(800);
 			imgWin.setFitHeight(600);
 			root.getChildren().add(imgWin);
