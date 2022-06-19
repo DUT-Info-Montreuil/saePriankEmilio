@@ -58,10 +58,9 @@ public class Environnement {
 		chronom.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				tempsPourmanche=30;
 				mancheLancer=true;
 			}
-		}, 5000);
+		}, 30000);
 	}
 
 	public void enleverUnEnnemiAucompteur() {
@@ -178,13 +177,13 @@ public class Environnement {
 				nbTimer++;
 				if(nbTimer ==1) {
 					chrono = new Timer();
-					ennemiMort = false;
-					chrono.schedule(new TimerTask() {
-						int temp = 5;
+					this.setEnnemiMort(false);
+					chrono.schedule(new TimerTask() {	
+						int temp = 10;
 						@Override
 						public void run() {
-							//if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
 							if(Collision.collisionEnnemiDroite(joueur, listeEnnemi) || Collision.collisionEnnemiGauche(joueur, listeEnnemi) ) {
+								
 								temp--;
 								System.out.println(temp);
 							}
@@ -197,7 +196,7 @@ public class Environnement {
 								toucher = false;
 								ennemiMort = true;
 								cancel();
-								nbTimer = 0;
+								nbTimer = -1;
 							}
 							if (temp==0 ) {
 								toucher = true;
@@ -309,5 +308,8 @@ public class Environnement {
 	//setter
 	public void setFalsemancheLancer() {
 		this.mancheLancer=false;
+	}
+	public void setEnnemiMort(boolean b) {
+		ennemiMort = b;
 	}
 }
