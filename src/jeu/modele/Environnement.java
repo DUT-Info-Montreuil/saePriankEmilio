@@ -370,7 +370,7 @@ public class Environnement {
 					projectile.toucher();
 					System.out.println("mur");
 				}
-				if(((projectile.getX()>joueur.getX()-1 && projectile.getX()<joueur.getX()+3) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
+				if(((projectile.getX()>joueur.getX() && projectile.getX()<joueur.getX()+8) || projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY()) {
 						System.out.println("on blesse");
 						joueur.blesser();
 						projectile.toucher();
