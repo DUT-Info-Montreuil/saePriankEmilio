@@ -39,8 +39,7 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 					chapeauSorcier.translateYProperty().bind(nouveau.getYProperty().add(-19));		
 					chapeauSorcier.setFitWidth(20);
 					chapeauSorcier.setFitHeight(20);
-					conteneur.getChildren().add(chapeauSorcier);	
-					((Sorcier) nouveau).getATirerProperty().addListener((obse,old,nouv)-> methodePourSorcier(nouveau,nouv));					
+					conteneur.getChildren().add(chapeauSorcier);					
 				}
 				ImageView r = new ImageView(images.get(0));
 				r.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
@@ -98,7 +97,5 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 
 	}
 
-	private void methodePourSorcier(Ennemi ennemi,Boolean nouv) {
-	}
 
 }
