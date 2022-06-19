@@ -165,9 +165,8 @@ public class Controller implements Initializable{
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.05), 
 				(ev ->{			
-					if(env.getTempsPourmanche()==30 && env.isMancheLancer()==true) {
-						env.ajouterTroisEnnemis();
-						
+					if(  env.isMancheLancer()==true) {
+						env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
 						env.setFalsemancheLancer();
 					}
 					

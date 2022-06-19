@@ -60,7 +60,7 @@ public class Environnement {
 			public void run() {
 				mancheLancer=true;
 			}
-		}, 30000);
+		}, 10000);
 	}
 
 	public void enleverUnEnnemiAucompteur() {
@@ -107,6 +107,14 @@ public class Environnement {
 		this.listeEnnemi.add(new Ennemi(100));
 		this.listeEnnemi.add(new Ennemi(190));
 
+	}
+	public void ajouterNEnnemi(int n) {
+		int distance = 40;
+		for (int i=0 ; i<n ;i++) {
+			this.listeEnnemi.add(new Ennemi(distance));
+			distance-=120;
+			
+		}
 	}
 
 	
