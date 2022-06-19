@@ -9,6 +9,7 @@ import jeu.modele.Collision;
 import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.Joueur;
+import jeu.modele.Sorcier;
 import jeu.modele.inventaire.objet.ObjetVide;
 
 public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
@@ -53,7 +54,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				}		
 				break;
 			case T :
-				env.ajtmanche();
+				env.ajouterSorcier(new Sorcier(0,this.env));
 				break;
 			case Y :
 				if (test==0) {

@@ -104,13 +104,11 @@ public class Environnement {
 	public void ajouterEnnemi(Ennemi e) {
 		this.listeEnnemi.add(e);
 	}
-
-	public void ajouterTroisEnnemis() {
-		this.listeEnnemi.add(new Ennemi(140,this));
-		this.listeEnnemi.add(new Ennemi(100,this));
-		this.listeEnnemi.add(new Ennemi(190,this));
-
+	
+	public void ajouterSorcier(Sorcier s) {
+		this.listeEnnemi.add(s);
 	}
+	
 	public void ajouterNEnnemi(int n) {
 		int distance = -1;
 		for (int i=0 ; i<n ;i++) {
