@@ -198,5 +198,15 @@
             <Font name="Franklin Gothic Medium" size="24.0" />
          </font>
       </Label>
+      <ImageView fx:id="imgMenuLancement" fitHeight="400.0" fitWidth="800.0" onMouseClicked="#lancerLeJeu" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../modele/image/imageMenu.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelLancerJeu" layoutX="50.0" layoutY="400.0" text="Cliquez sur l'image pour commencer" textFill="RED">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

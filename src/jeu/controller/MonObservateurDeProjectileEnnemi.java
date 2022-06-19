@@ -24,17 +24,14 @@ public class MonObservateurDeProjectileEnnemi implements ListChangeListener<Proj
 		while(c.next()){
 			// on ajoute les nouveau ennemie
 			for(ProjectileEnnemi nouveau: c.getAddedSubList()){
-			
-					
 					ImageView	imgBalle= new ImageView(new Image("jeu/modele/image/utilitaires/fireBal.png"));
-				
 					imgBalle.setId(nouveau.getId());
 					imgBalle.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
 					imgBalle.translateXProperty().bind(nouveau.getxProperty().add(50));
 					imgBalle.translateYProperty().bind(nouveau.getyProperty().add(6));
 					imgBalle.setFitWidth(20);
 					imgBalle.setFitHeight(20);
-					if(nouveau.getDirection()==2)
+					if(nouveau.getDirection()==2)//on oriente la boule de feu en fonction de la direction
 						imgBalle.setRotate(380);
 					else
 						imgBalle.setRotate(600);
@@ -42,19 +39,12 @@ public class MonObservateurDeProjectileEnnemi implements ListChangeListener<Proj
 				
 				
 			}
-			
 			for(ProjectileEnnemi mort: c.getRemoved()){
 				System.out.println(mort.getId());
 					enleverSprite(mort);
 			}
 		}
-
 	}
-		
-
-
-
-	
 	private void enleverSprite(Projectile mort) {
 		this.conteneur.getChildren().remove(this.conteneur.lookup("#"+mort.getId()));
 

@@ -36,11 +36,9 @@ public class MonObservateurEnnemie implements ListChangeListener<Ennemi>{
 				// on ajoute les nouveau ennemie
 				for(Ennemi nouveau: c.getAddedSubList()){
 					
-					if (nouveau instanceof Sorcier) {
+					if (nouveau instanceof Sorcier) 
 						((Sorcier) nouveau).getATirerProperty().addListener((obse,old,nouv)-> methodePourSorcier(nouveau,nouv));
-					}
-					
-					ImageView r = new ImageView(images.get(0));
+						ImageView r = new ImageView(images.get(0));
 						r.setOnMouseClicked(e-> System.out.println("clic sur acteur"+ e.getSource()));		
 						r.setId(nouveau.getId());
 						r.translateXProperty().bind(nouveau.getXProperty());

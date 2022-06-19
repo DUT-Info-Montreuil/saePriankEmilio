@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -43,13 +46,13 @@ public class Controller implements Initializable{
 	@FXML
 	private HBox inventaireObjet;
 	@FXML
-	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin,labelNumManches,labelNbennemiRestant;
+	private Label labelBois, labelMetal, labelPierre, labelNbDeBandage, labelNbDeKitDeSoin,labelNumManches,labelNbennemiRestant,labelLancerJeu;
 	
 	@FXML
 	private ImageView case1, case2, case3, case4, case5, case6;
 	@FXML
 	private ImageView ImageCraftBandage, ImageCraftEpeeBois, ImageCraftEpeeMetal, ImageCraftEpeePierre, ImageCraftHacheBois, ImageCraftHacheMetal, 
-	ImageCraftHachePierre, ImageCraftKitDeSoin, ImageCraftPiocheBois, ImageCraftPiocheMetal, ImageCraftPiochePierre, ImageCraftPistolet, ImageCraftBouclier;
+	ImageCraftHachePierre, ImageCraftKitDeSoin, ImageCraftPiocheBois, ImageCraftPiocheMetal, ImageCraftPiochePierre, ImageCraftPistolet, ImageCraftBouclier,imgMenuLancement;
 	@FXML
 	private ImageView craftInventaire;
 	@FXML
@@ -57,6 +60,11 @@ public class Controller implements Initializable{
 	
 	@FXML
 	private ImageView imgObjetDansLesMains;
+	
+	   @FXML
+	    private Button boutonLancerJeu;
+	
+	
 	//VARIABLES
 
 	private Timeline gameLoop;//boucle du jeu
@@ -71,15 +79,15 @@ public class Controller implements Initializable{
 	@Override
 	
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		initAnimation();
-		gameLoop.play();
-		
+	
 	}
-	
-
-	
-	
+	    @FXML
+	    void lancerLeJeu(MouseEvent event) {
+	    	initAnimation();
+			gameLoop.play();
+			imgMenuLancement.setVisible(false);
+			labelLancerJeu.setVisible(false);
+	    }
 	
 	
 	//GESTION DES TOUCHES
@@ -160,9 +168,9 @@ public class Controller implements Initializable{
 		new gestionnaireDeCraft(env.getJoueur(),textCraft,imagesCraft);
 		this.gestionDesTouches();
 	
-		env.lancerManche();
-			
-			
+	
+		env.lancerManche();	
+	
 		
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.05), 
@@ -184,6 +192,8 @@ public class Controller implements Initializable{
 
 	//Placer/Casser les blocks de la map
 	public void block() {
+
+		
 		root.setOnMouseClicked(ev -> {
 			construction = new Construction(env);
 			

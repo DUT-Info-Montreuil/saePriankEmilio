@@ -54,6 +54,93 @@ public class Environnement {
 
 
 	}
+	
+	
+	
+	
+	//getter
+		public Map getMap() {
+			return mape;
+		}
+		public int getnbResource() {
+			return listeResource.get(joueur.getMatChoisi()).getNbResourceProperty().getValue();
+		}
+		public int getTempsPourmanche() {
+			return tempsPourmanche;
+		}
+		public boolean isMancheLancer() {
+			return mancheLancer;
+		}
+		public Joueur getJoueur() {
+			return joueur;
+		}
+		public ObservableList<Ennemi> getListeEnnemi() {
+			return listeEnnemi;
+		}
+		public ObservableList<Projectile> getListeProjectile() {
+			return listeProjectile;
+		}
+		
+		public ObservableList<ProjectileEnnemi> getListeProjectileEnnemi() {
+			return listeProjectileEnnemi;
+		}
+		public final IntegerProperty getNbEnnemiProperty() {
+			return nbEnnemiProperty;
+		}
+		
+		
+		
+		
+		public Ennemi getEnnemi() {
+			return listeEnnemi.get(getnbResource());
+		}
+		public final IntegerProperty getNummeroMancheProperty() {
+			return nummeroMancheProperty;
+		}
+		public int[] getTabMap() {
+			return mape.getTab();
+		}
+		//getter resource
+		public Resource getResource(String matiere) {
+			if (matiere.equals("bois")) 
+				return this.bois;
+			else if (matiere.equals("pierre")) 
+				return this.pierre;
+			else if (matiere.equals("metal")) 
+				return this.metal;
+			return null;
+		}
+
+		public ArrayList<Resource> getListeResource() {
+			return listeResource;
+		}
+		public final IntegerProperty getNbResourceProperty(String matiere){
+			if (matiere.equals("bois")) 
+				return this.bois.getNbResourceProperty();
+			else if (matiere.equals("pierre")) 
+				return this.pierre.getNbResourceProperty();
+			else if (matiere.equals("metal")) 
+				return this.metal.getNbResourceProperty();
+			return null;
+		}
+
+		public int getNbResource(String matiere) {
+			if (matiere.equals("bois")) 
+				return bois.getNbResourceProperty().intValue();
+			else if (matiere.equals("pierre")) 
+				return pierre.getNbResourceProperty().intValue();
+			else if (matiere.equals("metal")) 
+				return metal.getNbResourceProperty().intValue();
+			return 0;
+
+		}
+
+	//setter
+		public void setFalsemancheLancer() {
+			this.mancheLancer=false;
+		}
+	
+	
 
 	public void lancerManche() {
 		Timer chronom=new Timer();
@@ -121,19 +208,10 @@ public class Environnement {
 	}
 
 	public void agit() {
-		
-		for (int i = 0; i < listeProjectileEnnemi.size(); i++) {
-			System.out.println(listeProjectileEnnemi.get(i).getId());
-			//System.out.println(listeProjectileEnnemi.get(i).getDirection());
-		}
-	
-		
-		
-		
+
 		for (int i = 0; i < listeEnnemi.size(); i++) {
 			ennemi=listeEnnemi.get(i);
-			//deplacement ennemie sorcier
-			
+			//deplacement et attaque ennemie sorcier
 			if (ennemi instanceof Sorcier) {
 				if(getJoueur().getX()+350 < this.ennemi.getX()  ) {
 					ennemi.setGauche(true);
@@ -159,7 +237,7 @@ public class Environnement {
 			}
 			
 			}else {
-				
+				// deplacement et attaque ennemi normal
 				if(getJoueur().getX()+40 < this.ennemi.getX()  ) {
 					ennemi.setGauche(true);
 					ennemi.setDroite(false);
@@ -179,7 +257,6 @@ public class Environnement {
 					ennemi.setGauche(false);
 				}
 				if(ennemi.getY()==joueur.getY() &&((ennemi.getX()>=joueur.getX() && ennemi.getX()<=joueur.getX()+40)||(ennemi.getX()<=joueur.getX() && ennemi.getX()>=joueur.getX()-40))) {
-					
 					nbTimer++;
 					if(nbTimer ==1) {
 						chrono = new Timer();
@@ -214,7 +291,6 @@ public class Environnement {
 						}, 0,100);
 					}
 					if(toucher && nbTimer==0 && !ennemiMort) {
-						
 						getJoueur().blesser();
 					}
 				}
@@ -288,17 +364,16 @@ public class Environnement {
 				Sorcier ennemiSorcier=projectile.getEnnemi();
 			switch (projectile.getDirection()) {
 			
+			//Projectile tirer a droite
 			case 1:
 				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
 					System.out.println("mur");
 				}
-				if((projectile.getX()>joueur.getX()-60|| (projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
+				if((projectile.getX()>joueur.getX()-60 &&projectile.getY()==joueur.getY() || (projectile.getX()==joueur.getX())&&projectile.getY()==joueur.getY())) {
 						System.out.println("on blesse");
 						joueur.blesser();
 						projectile.toucher();
-						
-	
 				}
 				if (projectile.getFini()) {
 					System.out.println("finito ennemi");
@@ -314,6 +389,7 @@ public class Environnement {
 					ennemiSorcier.setaTirer(false);
 				}
 				break;
+				//Projectile tirer a gauche
 			case 2:
 				if (Collision.collisionBalleDroite(projectile.getxProperty().get(), projectile.getyProperty().get(), getTabMap())) {
 					projectile.toucher();
@@ -351,87 +427,7 @@ public class Environnement {
 			this.joueur.tomber();
 		if(Collision.graviter(this.joueur,getTabMap())) 
 			this.joueur.setNbSaut(0);
-		//gestion des deplacements et attaques des ennemis 
-	}
-	//getter
-	public Map getMap() {
-		return mape;
-	}
-	public int getnbResource() {
-		return listeResource.get(joueur.getMatChoisi()).getNbResourceProperty().getValue();
-	}
-	public int getTempsPourmanche() {
-		return tempsPourmanche;
-	}
-	public boolean isMancheLancer() {
-		return mancheLancer;
-	}
-	public Joueur getJoueur() {
-		return joueur;
-	}
-	public ObservableList<Ennemi> getListeEnnemi() {
-		return listeEnnemi;
-	}
-	public ObservableList<Projectile> getListeProjectile() {
-		return listeProjectile;
+		
 	}
 	
-	public ObservableList<ProjectileEnnemi> getListeProjectileEnnemi() {
-		return listeProjectileEnnemi;
-	}
-	public final IntegerProperty getNbEnnemiProperty() {
-		return nbEnnemiProperty;
-	}
-	
-	
-	
-	
-	public Ennemi getEnnemi() {
-		return listeEnnemi.get(getnbResource());
-	}
-	public final IntegerProperty getNummeroMancheProperty() {
-		return nummeroMancheProperty;
-	}
-	public int[] getTabMap() {
-		return mape.getTab();
-	}
-	//getter resource
-	public Resource getResource(String matiere) {
-		if (matiere.equals("bois")) 
-			return this.bois;
-		else if (matiere.equals("pierre")) 
-			return this.pierre;
-		else if (matiere.equals("metal")) 
-			return this.metal;
-		return null;
-	}
-
-	public ArrayList<Resource> getListeResource() {
-		return listeResource;
-	}
-	public final IntegerProperty getNbResourceProperty(String matiere){
-		if (matiere.equals("bois")) 
-			return this.bois.getNbResourceProperty();
-		else if (matiere.equals("pierre")) 
-			return this.pierre.getNbResourceProperty();
-		else if (matiere.equals("metal")) 
-			return this.metal.getNbResourceProperty();
-		return null;
-	}
-
-	public int getNbResource(String matiere) {
-		if (matiere.equals("bois")) 
-			return bois.getNbResourceProperty().intValue();
-		else if (matiere.equals("pierre")) 
-			return pierre.getNbResourceProperty().intValue();
-		else if (matiere.equals("metal")) 
-			return metal.getNbResourceProperty().intValue();
-		return 0;
-
-	}
-
-	//setter
-	public void setFalsemancheLancer() {
-		this.mancheLancer=false;
-	}
 }
