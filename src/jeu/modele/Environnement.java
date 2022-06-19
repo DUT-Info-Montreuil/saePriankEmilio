@@ -63,7 +63,7 @@ public class Environnement {
 			public void run() {
 				mancheLancer=true;
 			}
-		}, 10000);
+		}, 5000);
 	}
 
 	public void enleverUnEnnemiAucompteur() {
@@ -261,14 +261,14 @@ public class Environnement {
 			ennemi=listeEnnemi.get(i);
 			
 			if (ennemi instanceof Sorcier) {
-				if(getJoueur().getX()+350 < this.ennemi.getX()  ) {
+				if(getJoueur().getX()+200 < this.ennemi.getX()  ) {
 					ennemi.setGauche(true);
 					ennemi.setDroite(false);
 					ennemi.setDirection(2);
 					if (!Collision.collisionGauche(ennemi,getTabMap()) && !Collision.collisionEnnemiGauche(ennemi, listeEnnemi)) 
 						this.ennemi.allerAGauche();
 				}
-				else if(getJoueur().getX() > this.ennemi.getX()+350  ) {
+				else if(getJoueur().getX() > this.ennemi.getX()+200  ) {
 					ennemi.setDroite(true);
 					ennemi.setGauche(false);
 					ennemi.setDirection(1);
