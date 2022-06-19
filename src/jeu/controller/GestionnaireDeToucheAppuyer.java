@@ -28,7 +28,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 		this.tabMap=env.getTabMap();
 		this.menuCraft=menuCraft;
 		this.craftInventaire = InventaireCraft;
-		
+
 		this.matChoisi = new ImageView();
 		matChoisi.setImage(new Image("jeu/modele/image/jaune.png"));
 		matChoisi.setTranslateX(497);
@@ -39,7 +39,6 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 	}
 	@Override
 	public void handle(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		root.setOnKeyPressed(e -> {
 			switch(e.getCode()){
 			case Q :
@@ -54,18 +53,15 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				}		
 				break;
 			case T :
-				joueur.blesser();
+				env.ajtmanche();
 				break;
 			case Y :
-			
-				System.out.println(env.getListeEnnemi());
 				if (test==0) {
 					env.ajouterEnnemi(new Ennemi(120));		
 					test++;
 				}else
-				env.ajouterEnnemi(new Ennemi(120));			
-				    
-			
+					env.ajouterEnnemi(new Ennemi(120));			
+				break;   
 			case U :
 				joueur.getEnv().AjouterResource("bois");
 				break;
@@ -120,7 +116,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				env.getJoueur().setObjetEquiper(15);
 				System.out.println("metal choisi");
 				break;
-				
+
 			case F4 :
 
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(0).getNumObjetCase().intValue());
@@ -129,7 +125,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateY(545);
 				matChoisi.setTranslateX(41);
 				matChoisi.setVisible(true);
-				
+
 				break;
 			case F5 :
 
@@ -140,7 +136,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateX(86);
 				matChoisi.setVisible(true);
 				break;
-				
+
 			case F6 :
 
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(2).getNumObjetCase().intValue());
@@ -150,7 +146,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateX(131);
 				matChoisi.setVisible(true);
 				break;
-				
+
 			case F7 :
 
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(3).getNumObjetCase().intValue());
@@ -160,7 +156,7 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateX(176);
 				matChoisi.setVisible(true);
 				break;
-				
+
 			case F8 :
 
 				env.getJoueur().setObjetEquiper(env.getJoueur().getInventaireObjet().getInventaire().get(4).getNumObjetCase().intValue());
@@ -179,13 +175,13 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateX(281);
 				matChoisi.setVisible(true);
 				break;
-				
-				
+
+
 			default:
 				break;
 			}
 		});
-		
+
 	}
 
 }

@@ -96,7 +96,50 @@ public class VueMap {
 		}
 	}
 
-	public void actualiser(int i, int resource) {
+	public void actualiser() {
+		tabMap = map.getTab();
+		for(int a=0 ; a<tabMap.length; a++) {
+			carte.getChildren().remove(a);
+			switch(tabMap[a]) {
+			case 0 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 1 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 2 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 3 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 4 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 5 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 6 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			case 7 :
+				imageActive = new ImageView(imagesMap.get(tabMap[a]));
+				break;
+			}
+			carte.getChildren().add(a,imageActive);	
+		}
+	}
+	
+	public void removeResource() {
+		for(int i=0 ; i<tabMap.length ; i++) {
+			if(tabMap[i]== 4 || tabMap[i]== 5 || tabMap[i]== 6) {
+				carte.getChildren().remove(i);
+				carte.getChildren().add( i, new ImageView(imagesMap.get(0)));
+			}
+		}
+	}
+	
+	public void ajouterResource(int i , int resource) {
 		carte.getChildren().remove(i);
 		carte.getChildren().add( i, new ImageView(imagesMap.get(resource)));
 	}

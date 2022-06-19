@@ -60,7 +60,7 @@ public class Environnement {
 			public void run() {
 				mancheLancer=true;
 			}
-		}, 10000);
+		}, 1000);
 	}
 
 	public void enleverUnEnnemiAucompteur() {

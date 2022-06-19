@@ -164,18 +164,42 @@ public class Controller implements Initializable{
 				Duration.seconds(0.05), 
 				(ev ->{			
 					if(  env.isMancheLancer()==true) {
-						env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
+						//env.ajouterNEnnemi(env.getNummeroMancheProperty().getValue()+2);
+						if(env.getNummeroMancheProperty().getValue() ==6) {
+							changementMap(env.getMap().getCarte2());
+						}
+						if(env.getNummeroMancheProperty().getValue() == 11) {
+							changementMap(env.getMap().getCarte3());
+						}
+						if(env.getNummeroMancheProperty().getValue() == 16) {
+							changementMap(env.getMap().getCarte4());
+						}
 						
-						env.setFalsemancheLancer();
 						if(env.getNummeroMancheProperty().getValue() >=2 && env.getNummeroMancheProperty().getValue() <6) {
-							ajouterResource(176, 4);
+							ajouterResource(175, 4);
 							ajouterResource(192, 4);
 							ajouterResource(198, 4);
 						}else if(env.getNummeroMancheProperty().getValue() >=6 && env.getNummeroMancheProperty().getValue() <11) {
-							ajouterResource(176, 5);
-							ajouterResource(192, 5);
-							ajouterResource(198, 5);
+							ajouterResource(205, 5);
+							ajouterResource(194, 5);
+							ajouterResource(188, 5);
 						}
+						else if(env.getNummeroMancheProperty().getValue() >=11 && env.getNummeroMancheProperty().getValue() <16) {
+							ajouterResource(197, 6);
+							ajouterResource(211, 6);
+							ajouterResource(195, 6);
+							ajouterResource(176, 6);
+						}
+						
+						else if(env.getNummeroMancheProperty().getValue() >=16 && env.getNummeroMancheProperty().getValue() <21) {
+							ajouterResource(150, 4);
+							ajouterResource(186, 5);
+							ajouterResource(196, 5);
+							ajouterResource(224, 6);
+							ajouterResource(198, 6);
+						}
+						
+						env.setFalsemancheLancer();
 					}
 					
 
@@ -233,9 +257,18 @@ public class Controller implements Initializable{
 	}
 	
 	public void ajouterResource(int i, int resource) {
-		env.getMap().changementMap(i,resource);
-		vueMap.actualiser(i,resource);
+		env.getMap().ajouterResource(i,resource);
+		vueMap.ajouterResource(i,resource);
 	}
 	
+	
+	public void changementMap(int[] tabMap) {
+		env.getMap().changementMap(tabMap);
+		vueMap.actualiser();
+		env.getMap().removeResource();
+		vueMap.removeResource();
+		env.getJoueur().setX(40);
+		env.getJoueur().setY(360);
+	}
 	
 }
