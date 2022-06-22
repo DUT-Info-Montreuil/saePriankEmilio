@@ -6,8 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import jeu.modele.Collision;
+import jeu.modele.Ennemi;
 import jeu.modele.Environnement;
 import jeu.modele.Joueur;
+import jeu.modele.Sorcier;
 
 public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 	private Pane root;
@@ -133,6 +135,19 @@ public class GestionnaireDeToucheAppuyer implements EventHandler<KeyEvent>{
 				matChoisi.setTranslateX(281);
 				matChoisi.setVisible(true);
 				break;
+				
+			case U :
+				env.getListeResource().get(0).ajouterResource();
+				env.getListeResource().get(1).ajouterResource();
+				env.getListeResource().get(2).ajouterResource();
+			case M : 
+				env.getListeEnnemi().add(new Sorcier(1,env));
+				break;
+			case L :
+				env.getListeEnnemi().add(new Ennemi(1,env));
+				break;
+			case K : 
+				env.getNummeroMancheProperty().setValue(env.getNummeroMancheProperty().getValue()+1);
 			default:
 				break;
 			}
